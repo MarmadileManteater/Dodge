@@ -4,32 +4,32 @@ const Direction = preload("res://scripts/direction.gd")
 
 var speed = 200
 
-var directionsPressed = []
+var directions_pressed = []
 
-var animatedSprite: AnimatedSprite2D
+var animated_sprite: AnimatedSprite2D
 
 func _enter_tree() -> void:
-	animatedSprite = find_child("AnimatedSprite2D")
+	animated_sprite = find_child("AnimatedSprite2D")
 
 func _input(event: InputEvent) -> void:
-	for direction in Direction.englishDirections:
+	for direction in Direction.english_directions:
 		if (event.is_action_pressed("ui_%s" % direction)):
-			animatedSprite.animation = "walk_%s" % direction
-			directionsPressed.append(
-				Direction.toEnum(direction)
+			animated_sprite.animation = "walk_%s" % direction
+			directions_pressed.append(
+				Direction.to_enum(direction)
 			)
 		if (event.is_action_released("ui_%s" % direction)):
-			animatedSprite.animation = "idle_%s" % direction
-			directionsPressed.remove_at(
-				directionsPressed.find(
-					Direction.toEnum(direction)
+			animated_sprite.animation = "idle_%s" % direction
+			directions_pressed.remove_at(
+				directions_pressed.find(
+					Direction.to_enum(direction)
 				)
 			)
 		
 
 func _physics_process(delta: float) -> void:
 	linear_velocity = Vector2(0, 0)
-	if (len(directionsPressed) > 0):
-		animatedSprite.animation = "walk_%s" % Direction.toEnglish(directionsPressed[0])
-		for direction in directionsPressed:
-			linear_velocity += Direction.toVec2(direction, speed)
+	if (len(directions_pressed) > 0):
+		animated_sprite.animation = "walk_%s" % Direction.to_english(directions_pressed[0])
+		for direction in directions_pressed:
+			linear_velocity += Direction.to_vec2(direction, speed)
