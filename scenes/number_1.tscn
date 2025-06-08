@@ -1,7 +1,8 @@
-[gd_scene load_steps=50 format=3 uid="uid://btxnb4hdoanqc"]
+[gd_scene load_steps=54 format=3 uid="uid://btxnb4hdoanqc"]
 
 [ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="1_hqiah"]
 [ext_resource type="Script" uid="uid://ckwxx3i7msb7c" path="res://scripts/character.gd" id="2_d0kwv"]
+[ext_resource type="Texture2D" uid="uid://mnqel2hj68lq" path="res://assets/spritesheets/16x16-rpg-icons.png" id="3_3llju"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d0kwv"]
 atlas = ExtResource("1_hqiah")
@@ -360,10 +361,31 @@ size = Vector2(18, 22)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3llju"]
 size = Vector2(20, 674)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7viy"]
+atlas = ExtResource("3_3llju")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_877u3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i7viy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ck8lo"]
+radius = 19.0
+height = 56.0
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" type="RigidBody2D" parent="."]
-position = Vector2(166, 81)
+position = Vector2(575, 334)
+collision_layer = 3
+collision_mask = 3
 gravity_scale = 0.0
 script = ExtResource("2_d0kwv")
 
@@ -395,5 +417,20 @@ scale = Vector2(60, 0.05)
 shape = SubResource("RectangleShape2D_3llju")
 
 [node name="Right Wall" type="CollisionShape2D" parent="Bounding Box"]
-position = Vector2(1135, 321)
+position = Vector2(1134, 320)
 shape = SubResource("RectangleShape2D_3llju")
+
+[node name="Fireball" type="RigidBody2D" parent="."]
+position = Vector2(583, -92)
+collision_layer = 2
+collision_mask = 2
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Fireball"]
+texture_filter = 1
+rotation = -1.01578
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_877u3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fireball"]
+position = Vector2(1, 2)
+shape = SubResource("CapsuleShape2D_ck8lo")

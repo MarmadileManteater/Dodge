@@ -33,4 +33,4 @@ func _physics_process(delta: float) -> void:
 	if (len(directions_pressed) > 0):
 		animated_sprite.animation = "walk_%s" % Direction.to_english(directions_pressed[0])
 		for direction in directions_pressed:
-			linear_velocity = Direction.to_vec2(direction, speed)
+			linear_velocity += Direction.to_vec2(direction, speed)
