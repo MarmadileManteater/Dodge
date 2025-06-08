@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://btxnb4hdoanqc"]
+[gd_scene load_steps=50 format=3 uid="uid://btxnb4hdoanqc"]
 
 [ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="1_hqiah"]
 [ext_resource type="Script" uid="uid://ckwxx3i7msb7c" path="res://scripts/character.gd" id="2_d0kwv"]
@@ -357,21 +357,43 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d0kwv"]
 size = Vector2(18, 22)
 
-[node name="Node2D" type="Node2D"]
-scale = Vector2(4, 4)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3llju"]
+size = Vector2(20, 674)
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="RigidBody2D" parent="."]
 position = Vector2(166, 81)
 gravity_scale = 0.0
 script = ExtResource("2_d0kwv")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RigidBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 texture_filter = 1
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_sj2e1")
 animation = &"walk_up"
 autoplay = "idle_down"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_d0kwv")
+
+[node name="Bounding Box" type="StaticBody2D" parent="."]
+
+[node name="Left Wall" type="CollisionShape2D" parent="Bounding Box"]
+position = Vector2(16, 323)
+shape = SubResource("RectangleShape2D_3llju")
+
+[node name="Top Wall" type="CollisionShape2D" parent="Bounding Box"]
+position = Vector2(581, 24)
+scale = Vector2(60, 0.05)
+shape = SubResource("RectangleShape2D_3llju")
+
+[node name="Bottom Wall" type="CollisionShape2D" parent="Bounding Box"]
+position = Vector2(567, 641)
+scale = Vector2(60, 0.05)
+shape = SubResource("RectangleShape2D_3llju")
+
+[node name="Right Wall" type="CollisionShape2D" parent="Bounding Box"]
+position = Vector2(1135, 321)
+shape = SubResource("RectangleShape2D_3llju")

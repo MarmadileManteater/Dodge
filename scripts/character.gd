@@ -28,8 +28,9 @@ func _input(event: InputEvent) -> void:
 		
 
 func _physics_process(delta: float) -> void:
+	rotation = 0
 	linear_velocity = Vector2(0, 0)
 	if (len(directions_pressed) > 0):
 		animated_sprite.animation = "walk_%s" % Direction.to_english(directions_pressed[0])
 		for direction in directions_pressed:
-			linear_velocity += Direction.to_vec2(direction, speed)
+			linear_velocity = Direction.to_vec2(direction, speed)
