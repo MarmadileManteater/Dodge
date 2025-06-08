@@ -25,9 +25,12 @@ func _input(event: InputEvent) -> void:
 					Direction.to_enum(direction)
 				)
 			)
-		
 
 func _physics_process(delta: float) -> void:
+	var bodies = get_colliding_bodies()
+	var projectiles = bodies.filter(func(body: Node2D): return body.name.ends_with("Projectile"))
+	if (len(projectiles) != 0):
+		animated_sprite.animation = "explosion"
 	rotation = 0
 	linear_velocity = Vector2(0, 0)
 	if (len(directions_pressed) > 0):

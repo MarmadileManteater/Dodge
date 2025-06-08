@@ -1,8 +1,29 @@
-[gd_scene load_steps=54 format=3 uid="uid://btxnb4hdoanqc"]
+[gd_scene load_steps=60 format=3 uid="uid://btxnb4hdoanqc"]
 
 [ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="1_hqiah"]
 [ext_resource type="Script" uid="uid://ckwxx3i7msb7c" path="res://scripts/character.gd" id="2_d0kwv"]
+[ext_resource type="Texture2D" uid="uid://bqjg2i4i7vbsu" path="res://assets/spritesheets/bird_dead.png" id="2_kc0d3"]
 [ext_resource type="Texture2D" uid="uid://mnqel2hj68lq" path="res://assets/spritesheets/16x16-rpg-icons.png" id="3_3llju"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_877u3"]
+atlas = ExtResource("2_kc0d3")
+region = Rect2(0, 0, 33, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ck8lo"]
+atlas = ExtResource("2_kc0d3")
+region = Rect2(33, 0, 33, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_br0nk"]
+atlas = ExtResource("2_kc0d3")
+region = Rect2(66, 0, 33, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajunv"]
+atlas = ExtResource("2_kc0d3")
+region = Rect2(99, 0, 33, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sn0h2"]
+atlas = ExtResource("2_kc0d3")
+region = Rect2(132, 0, 33, 33)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d0kwv"]
 atlas = ExtResource("1_hqiah")
@@ -182,6 +203,26 @@ region = Rect2(336, 336, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sj2e1"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_877u3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ck8lo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_br0nk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajunv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sn0h2")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d0kwv")
@@ -387,14 +428,18 @@ position = Vector2(575, 334)
 collision_layer = 3
 collision_mask = 3
 gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 4
 script = ExtResource("2_d0kwv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 texture_filter = 1
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_sj2e1")
-animation = &"walk_up"
+animation = &"explosion"
 autoplay = "idle_down"
+frame = 4
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, -3)
@@ -420,17 +465,17 @@ shape = SubResource("RectangleShape2D_3llju")
 position = Vector2(1134, 320)
 shape = SubResource("RectangleShape2D_3llju")
 
-[node name="Fireball" type="RigidBody2D" parent="."]
+[node name="Fireball-Projectile" type="RigidBody2D" parent="."]
 position = Vector2(583, -92)
 collision_layer = 2
 collision_mask = 2
 
-[node name="Sprite" type="AnimatedSprite2D" parent="Fireball"]
+[node name="Sprite" type="AnimatedSprite2D" parent="Fireball-Projectile"]
 texture_filter = 1
 rotation = -1.01578
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_877u3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Fireball"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fireball-Projectile"]
 position = Vector2(1, 2)
 shape = SubResource("CapsuleShape2D_ck8lo")
