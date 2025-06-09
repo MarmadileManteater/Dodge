@@ -3,6 +3,7 @@ const Player = preload("res://scripts/character.gd")
 
 var player: Player
 var outline: Line2D
+var projectile_area: Node2D
 var projectiles: Array
 var projectile_timer: Timer
 var counter = 0
@@ -24,7 +25,7 @@ func spawn_projectile(projectile: RigidBody2D):
 		projectile.name
 	] 
 	counter+=1
-	add_child(new_projectile)
+	projectile_area.add_child(new_projectile)
 
 func _on_projectile_timer_timeout() -> void:
 	var projectile: RigidBody2D = projectiles[randi() % len(projectiles)]
@@ -47,4 +48,5 @@ func _enter_tree() -> void:
 	score_backdrop.text = "%d" % progression
 	
 	projectiles = find_children("*-Projectile")
+	projectile_area = find_child("Projectiles")
 	projectile_timer = find_child("ProjectileTimer")

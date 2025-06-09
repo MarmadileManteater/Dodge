@@ -506,6 +506,8 @@ points = PackedVector2Array(-92, 736, -92.7679, 613.602, -93.6255, 476.891, -94.
 wait_time = 4.0
 autostart = true
 
+[node name="Projectiles" type="Node2D" parent="."]
+
 [node name="ScoreLabel Backdrop" type="RichTextLabel" parent="."]
 texture_filter = 1
 offset_left = 185.0
