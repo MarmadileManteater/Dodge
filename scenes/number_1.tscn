@@ -1,5 +1,6 @@
-[gd_scene load_steps=60 format=3 uid="uid://btxnb4hdoanqc"]
+[gd_scene load_steps=61 format=3 uid="uid://btxnb4hdoanqc"]
 
+[ext_resource type="Script" uid="uid://btmurkrw0wt34" path="res://scripts/number_1.gd" id="1_2ane3"]
 [ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="1_hqiah"]
 [ext_resource type="Script" uid="uid://ckwxx3i7msb7c" path="res://scripts/character.gd" id="2_d0kwv"]
 [ext_resource type="Texture2D" uid="uid://bqjg2i4i7vbsu" path="res://assets/spritesheets/bird_dead.png" id="2_kc0d3"]
@@ -422,6 +423,7 @@ radius = 19.0
 height = 56.0
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_2ane3")
 
 [node name="Player" type="RigidBody2D" parent="."]
 position = Vector2(575, 334)
@@ -466,9 +468,10 @@ position = Vector2(1134, 320)
 shape = SubResource("RectangleShape2D_3llju")
 
 [node name="Fireball-Projectile" type="RigidBody2D" parent="."]
-position = Vector2(583, -92)
+position = Vector2(580, -73)
 collision_layer = 2
 collision_mask = 2
+gravity_scale = 0.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Fireball-Projectile"]
 texture_filter = 1
@@ -479,3 +482,6 @@ sprite_frames = SubResource("SpriteFrames_877u3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Fireball-Projectile"]
 position = Vector2(1, 2)
 shape = SubResource("CapsuleShape2D_ck8lo")
+
+[node name="ProjectileTimer" type="Timer" parent="."]
+autostart = true
