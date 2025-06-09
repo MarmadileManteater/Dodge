@@ -1,10 +1,11 @@
-[gd_scene load_steps=61 format=3 uid="uid://btxnb4hdoanqc"]
+[gd_scene load_steps=63 format=3 uid="uid://btxnb4hdoanqc"]
 
 [ext_resource type="Script" uid="uid://btmurkrw0wt34" path="res://scripts/number_1.gd" id="1_2ane3"]
 [ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="1_hqiah"]
 [ext_resource type="Script" uid="uid://ckwxx3i7msb7c" path="res://scripts/character.gd" id="2_d0kwv"]
 [ext_resource type="Texture2D" uid="uid://bqjg2i4i7vbsu" path="res://assets/spritesheets/bird_dead.png" id="2_kc0d3"]
 [ext_resource type="Texture2D" uid="uid://mnqel2hj68lq" path="res://assets/spritesheets/16x16-rpg-icons.png" id="3_3llju"]
+[ext_resource type="Script" uid="uid://bqnbgso0b61h6" path="res://scripts/projectile.gd" id="5_sj2e1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_877u3"]
 atlas = ExtResource("2_kc0d3")
@@ -25,6 +26,10 @@ region = Rect2(99, 0, 33, 33)
 [sub_resource type="AtlasTexture" id="AtlasTexture_sn0h2"]
 atlas = ExtResource("2_kc0d3")
 region = Rect2(132, 0, 33, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8vf12"]
+atlas = ExtResource("1_hqiah")
+region = Rect2(240, 432, 120, 144)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d0kwv"]
 atlas = ExtResource("1_hqiah")
@@ -219,6 +224,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sn0h2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8vf12")
 }],
 "loop": false,
 "name": &"explosion",
@@ -473,6 +481,10 @@ shape = SubResource("RectangleShape2D_3llju")
 position = Vector2(580, -73)
 collision_layer = 2
 gravity_scale = 0.0
+script = ExtResource("5_sj2e1")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Fireball-Projectile"]
+position = Vector2(-580, 73)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Fireball-Projectile"]
 texture_filter = 1
@@ -489,3 +501,59 @@ autostart = true
 
 [node name="Outline" type="Line2D" parent="."]
 points = PackedVector2Array(-92, 736, -92.7679, 613.602, -93.6255, 476.891, -94.646, 314.228, -95.3709, 198.679, -99, 90, -98.0647, 19.3866, -97, -61, 19, -70, 259.628, -73.8099, 370, -75, 523.623, -77.5332, 728.786, -80.9164, 964.517, -84.8036, 1101.32, -87.0594, 1219, -89, 1219.86, 50.189, 1238, 182, 1234.69, 309.132, 1229.96, 490.939, 1226, 588, 1224, 720, 1131.97, 720.886, 1025.85, 721.907, 907.898, 723.042, 804.181, 724.04, 682, 722, 549.719, 723.876, 448.314, 725.315, 392, 736, 254.935, 734.679, 129.816, 733.473, 49.7218, 732.701, -23, 732)
+
+[node name="ProgressionTimer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="ScoreLabel Backdrop" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = 185.0
+offset_top = 58.0
+offset_right = 377.0
+offset_bottom = 85.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[b]Score:[/b]"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = 182.0
+offset_top = 53.0
+offset_right = 374.0
+offset_bottom = 78.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "[b]Score:[/b]"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Score Backdrop" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = 184.0
+offset_top = 143.0
+offset_right = 376.0
+offset_bottom = 170.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Score" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = 181.0
+offset_top = 138.0
+offset_right = 373.0
+offset_bottom = 163.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+scroll_active = false
+horizontal_alignment = 1
+
+[connection signal="screen_exited" from="Fireball-Projectile/VisibleOnScreenNotifier2D" to="Fireball-Projectile" method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="ProjectileTimer" to="." method="_on_projectile_timer_timeout"]
+[connection signal="timeout" from="ProgressionTimer" to="." method="_on_progression_timer_timeout"]
