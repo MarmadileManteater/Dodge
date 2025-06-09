@@ -427,8 +427,8 @@ script = ExtResource("1_2ane3")
 
 [node name="Player" type="RigidBody2D" parent="."]
 position = Vector2(575, 334)
-collision_layer = 3
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 4
@@ -448,6 +448,8 @@ position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_d0kwv")
 
 [node name="Bounding Box" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 4
 
 [node name="Left Wall" type="CollisionShape2D" parent="Bounding Box"]
 position = Vector2(16, 323)
@@ -470,7 +472,6 @@ shape = SubResource("RectangleShape2D_3llju")
 [node name="Fireball-Projectile" type="RigidBody2D" parent="."]
 position = Vector2(580, -73)
 collision_layer = 2
-collision_mask = 2
 gravity_scale = 0.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Fireball-Projectile"]
@@ -485,3 +486,6 @@ shape = SubResource("CapsuleShape2D_ck8lo")
 
 [node name="ProjectileTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="Outline" type="Line2D" parent="."]
+points = PackedVector2Array(-92, 736, -92.7679, 613.602, -93.6255, 476.891, -94.646, 314.228, -95.3709, 198.679, -99, 90, -98.0647, 19.3866, -97, -61, 19, -70, 259.628, -73.8099, 370, -75, 523.623, -77.5332, 728.786, -80.9164, 964.517, -84.8036, 1101.32, -87.0594, 1219, -89, 1219.86, 50.189, 1238, 182, 1234.69, 309.132, 1229.96, 490.939, 1226, 588, 1224, 720, 1131.97, 720.886, 1025.85, 721.907, 907.898, 723.042, 804.181, 724.04, 682, 722, 549.719, 723.876, 448.314, 725.315, 392, 736, 254.935, 734.679, 129.816, 733.473, 49.7218, 732.701, -23, 732)
