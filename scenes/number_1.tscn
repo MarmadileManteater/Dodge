@@ -455,6 +455,10 @@ frame_progress = 1.0
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_d0kwv")
 
+[node name="DemoTimer" type="Timer" parent="Player"]
+wait_time = 1.5
+autostart = true
+
 [node name="Bounding Box" type="StaticBody2D" parent="."]
 collision_layer = 4
 collision_mask = 4
@@ -510,35 +514,35 @@ autostart = true
 
 [node name="ScoreLabel Backdrop" type="RichTextLabel" parent="."]
 texture_filter = 1
-offset_left = 185.0
-offset_top = 58.0
-offset_right = 377.0
-offset_bottom = 85.0
+offset_left = 194.0
+offset_top = 54.0
+offset_right = 386.0
+offset_bottom = 81.0
 scale = Vector2(4, 4)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
-text = "[b]Score:[/b]"
+text = "[b]Dodge! (the projectiles)[/b]"
 scroll_active = false
 horizontal_alignment = 1
 
 [node name="ScoreLabel" type="RichTextLabel" parent="."]
 texture_filter = 1
-offset_left = 182.0
-offset_top = 53.0
-offset_right = 374.0
-offset_bottom = 78.0
+offset_left = 191.0
+offset_top = 49.0
+offset_right = 383.0
+offset_bottom = 74.0
 scale = Vector2(4, 4)
 bbcode_enabled = true
-text = "[b]Score:[/b]"
+text = "[b]Dodge! (the projectiles)[/b]"
 scroll_active = false
 horizontal_alignment = 1
 
 [node name="Score Backdrop" type="RichTextLabel" parent="."]
 texture_filter = 1
-offset_left = 184.0
-offset_top = 143.0
-offset_right = 376.0
-offset_bottom = 170.0
+offset_left = 193.0
+offset_top = 139.0
+offset_right = 385.0
+offset_bottom = 166.0
 scale = Vector2(4, 4)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
@@ -547,15 +551,16 @@ horizontal_alignment = 1
 
 [node name="Score" type="RichTextLabel" parent="."]
 texture_filter = 1
-offset_left = 181.0
-offset_top = 138.0
-offset_right = 373.0
-offset_bottom = 163.0
+offset_left = 190.0
+offset_top = 134.0
+offset_right = 382.0
+offset_bottom = 159.0
 scale = Vector2(4, 4)
 bbcode_enabled = true
 scroll_active = false
 horizontal_alignment = 1
 
+[connection signal="timeout" from="Player/DemoTimer" to="Player" method="_on_demo_timer_timeout"]
 [connection signal="screen_exited" from="Fireball-Projectile/VisibleOnScreenNotifier2D" to="Fireball-Projectile" method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="ProjectileTimer" to="." method="_on_projectile_timer_timeout"]
 [connection signal="timeout" from="ProgressionTimer" to="." method="_on_progression_timer_timeout"]

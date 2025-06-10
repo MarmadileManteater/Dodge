@@ -10,6 +10,8 @@ var counter = 0
 var progression = 0
 var score: RichTextLabel
 var score_backdrop: RichTextLabel
+var score_label: RichTextLabel
+var score_label_backdrop: RichTextLabel
 
 func generate_coord_around_viewport():
 	return outline.get_point_position(randi() % outline.get_point_count())
@@ -32,21 +34,36 @@ func _on_projectile_timer_timeout() -> void:
 	spawn_projectile(projectile)
 	
 func _on_progression_timer_timeout() -> void:
-	if (player.alive):
+	if (player.alive and player.mode == "game"):
 		progression+=1
 		score.text = "%d" % progression
 		score_backdrop.text = "%d" % progression
 		projectile_timer.wait_time = 1.0 / (progression + 1)
-
 	
 func _enter_tree() -> void:
 	player = find_child("Player")
 	outline = find_child("Outline")
+	score_label = find_child("ScoreLabel")
+	score_label_backdrop = find_child("ScoreLabel Backdrop")
 	score = find_child("Score")
 	score_backdrop = find_child("Score Backdrop")
-	score.text = "%d" % progression
-	score_backdrop.text = "%d" % progression
 	
 	projectiles = find_children("*-Projectile")
 	projectile_area = find_child("Projectiles")
 	projectile_timer = find_child("ProjectileTimer")
+
+func _input(event: InputEvent) -> void:
+	if (event.is_action_pressed("ui_accept")):
+		play()
+
+func play():
+	# remove all projectiles
+	for child in projectile_area.get_children():
+		projectile_area.remove_child(child)
+	progression = 0
+	score_label.text = "[b]Score:[/b]"
+	score_label_backdrop.text = "[b]Score:[/b]"
+	score.text = "%d" % progression
+	score_backdrop.text = "%d" % progression
+	player.play()
+	player.animated_sprite.play()
