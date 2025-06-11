@@ -33,9 +33,11 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	var bodies = get_colliding_bodies()
 	var projectiles = bodies.filter(func(body: Node2D): return body.name.ends_with("Projectile"))
-	if (len(projectiles) != 0):
+	if (len(projectiles) != 0) && alive:
 		animated_sprite.animation = "explosion"
 		alive = false
+		# prevents this branch from being called twice in a row
+		set_physics_process(false)
 	rotation = 0
 	linear_velocity = Vector2(0, 0)
 	if (len(directions_pressed) > 0) && alive:
@@ -44,7 +46,6 @@ func _physics_process(delta: float) -> void:
 			linear_velocity += Direction.to_vec2(direction, speed)
 
 func reset():
-	alive = true
 	# set position of rigidbody
 	PhysicsServer2D.body_set_state(
 		get_rid(),
@@ -53,6 +54,8 @@ func reset():
 	)
 	directions_pressed = []
 	animated_sprite.animation = "idle_down"
+	alive = true
+	set_physics_process(true)
 
 func play():
 	mode = "game"

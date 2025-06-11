@@ -12,6 +12,9 @@ var score: RichTextLabel
 var score_backdrop: RichTextLabel
 var score_label: RichTextLabel
 var score_label_backdrop: RichTextLabel
+var demo_label: RichTextLabel
+var demo_label_backdrop: RichTextLabel
+var demo_label_container: Node2D
 
 func generate_coord_around_viewport():
 	return outline.get_point_position(randi() % outline.get_point_count())
@@ -47,6 +50,9 @@ func _enter_tree() -> void:
 	score_label_backdrop = find_child("ScoreLabel Backdrop")
 	score = find_child("Score")
 	score_backdrop = find_child("Score Backdrop")
+	demo_label = find_child("Demo")
+	demo_label_backdrop = find_child("Demo Backdrop")
+	demo_label_container = find_child("DemoLabel Container")
 	
 	projectiles = find_children("*-Projectile")
 	projectile_area = find_child("Projectiles")
@@ -56,14 +62,22 @@ func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("ui_accept")):
 		play()
 
-func play():
+func reset():
 	# remove all projectiles
 	for child in projectile_area.get_children():
 		projectile_area.remove_child(child)
 	progression = 0
+	
+func play():
+	demo_label_container.visible = false
+	reset()
 	score_label.text = "[b]Score:[/b]"
 	score_label_backdrop.text = "[b]Score:[/b]"
 	score.text = "%d" % progression
 	score_backdrop.text = "%d" % progression
 	player.play()
 	player.animated_sprite.play()
+
+func _on_demo_timer_timeout() -> void:
+	demo_label.visible = !demo_label.visible
+	demo_label_backdrop.visible = !demo_label_backdrop.visible
