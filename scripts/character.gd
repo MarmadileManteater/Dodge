@@ -36,23 +36,19 @@ func _physics_process(delta: float) -> void:
 	if (alive && animated_sprite.animation == "explosion"):
 		animated_sprite.animation = "idle_down"
 		animated_sprite.play()
-	if (alive && len(directions_pressed) == 0):
-		animated_sprite.animation = "idle_down"
 	var bodies = get_colliding_bodies()
-	var projectiles = bodies.filter(func(body: Node2D): return body.name.ends_with("Projectile"))
+	var projectiles = bodies.filter(func(body: Node2D): return body.name.ends_with("Projectile") && body.is_inside_tree())
 	if (len(projectiles) != 0) && alive:
-		var projectile1: RigidBody2D = projectiles[0]
-		# if the collision isn't inside the tree, it must be old
-		if (projectile1.is_inside_tree()):
-			for projectile in projectiles:
-				var body: RigidBody2D = projectile
-				body.queue_free()
-			# prevents this branch from being called twice in a row
-			set_physics_process(false)
-			animated_sprite.animation = "explosion"
-			alive = false
-			if (mode == "demo"):
-				death_timer.start()
+		for projectile in projectiles:
+			var body: RigidBody2D = projectile
+			body.queue_free()
+		# prevent collisions after the first one
+		set_physics_process(false)
+		animated_sprite.animation = "explosion"
+		alive = false
+		if (mode == "demo"):
+			# use a timer to restart when in demo mode
+			death_timer.start()
 	rotation = 0
 	linear_velocity = Vector2(0, 0)
 	if (len(directions_pressed) > 0) && alive:
@@ -61,6 +57,9 @@ func _physics_process(delta: float) -> void:
 			linear_velocity += Direction.to_vec2(direction, speed)
 
 func reset():
+	if (alive):
+		# reset animation when alive
+		animated_sprite.animation = "idle_down"
 	contact_monitor = true
 	death_timer.stop()
 	# set position of rigidbody
