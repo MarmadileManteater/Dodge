@@ -67,6 +67,8 @@ func reset():
 	for child in projectile_area.get_children():
 		projectile_area.remove_child(child)
 	progression = 0
+	counter = 0
+	player.reset()
 	
 func play():
 	demo_label_container.visible = false
@@ -76,8 +78,11 @@ func play():
 	score.text = "%d" % progression
 	score_backdrop.text = "%d" % progression
 	player.play()
-	player.animated_sprite.play()
 
 func _on_demo_timer_timeout() -> void:
 	demo_label.visible = !demo_label.visible
 	demo_label_backdrop.visible = !demo_label_backdrop.visible
+
+
+func _on_death_timer_timeout() -> void:
+	reset()

@@ -461,7 +461,7 @@ collision_layer = 7
 collision_mask = 7
 gravity_scale = 0.0
 contact_monitor = true
-max_contacts_reported = 4
+max_contacts_reported = 1
 script = ExtResource("2_d0kwv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
@@ -480,6 +480,9 @@ shape = SubResource("RectangleShape2D_d0kwv")
 [node name="DemoTimer" type="Timer" parent="Player"]
 wait_time = 1.5
 autostart = true
+
+[node name="DeathTimer" type="Timer" parent="Player"]
+wait_time = 3.0
 
 [node name="Bounding Box" type="StaticBody2D" parent="."]
 collision_layer = 4
@@ -612,6 +615,7 @@ wait_time = 0.5
 autostart = true
 
 [connection signal="timeout" from="Player/DemoTimer" to="Player" method="_on_demo_timer_timeout"]
+[connection signal="timeout" from="Player/DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="screen_exited" from="Fireball-Projectile/VisibleOnScreenNotifier2D" to="Fireball-Projectile" method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="ProjectileTimer" to="." method="_on_projectile_timer_timeout"]
 [connection signal="timeout" from="ProgressionTimer" to="." method="_on_progression_timer_timeout"]
