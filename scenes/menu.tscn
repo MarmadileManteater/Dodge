@@ -56,31 +56,92 @@ scale = Vector2(4, 4)
 tile_map_data = PackedByteArray("AAD9/wIAAgAAAAEAAAD+/wMAAgABAAEAAAD9/wMAAgAAAAEAAAD//wMAAgABAAEAAAAAAAMAAgABAAEAAAABAAMAAgABAAEAAAACAAMAAgAEAAEAAAACAAEAAgAEAAEAAAACAAIAAgAEAAEAAAACAAAAAgAEAAEAAAACAP//AgAEAAEAAAACAP7/AgAEAAEAAAD9/wEAAgAAAAEAAAD9/wAAAgAAAAEAAAD9////AgAAAAEAAAD9//7/AgAAAAEAAAD9//3/AgAAAAAAAAD+//3/AgABAAAAAAD///3/AgABAAAAAAAAAP3/AgABAAAAAAABAP3/AgABAAAAAAACAP3/AgAEAAAAAAD+//7/AgABAAEAAAD+////AgABAAEAAAD+/wAAAgABAAEAAAD+/wEAAgABAAEAAAD+/wIAAgABAAEAAAD///7/AgABAAEAAAD/////AgABAAEAAAD//wAAAgABAAEAAAD//wEAAgABAAEAAAD//wIAAgABAAEAAAAAAP7/AgABAAEAAAAAAP//AgABAAEAAAAAAAAAAgABAAEAAAAAAAEAAgABAAEAAAAAAAIAAgABAAEAAAABAP7/AgABAAEAAAABAP//AgABAAEAAAABAAAAAgABAAEAAAABAAEAAgABAAEAAAABAAIAAgABAAEAAAD9/wQAAgAAAAIAAAACAAQAAgAEAAIAAAD+/wQAAgADAAIAAAD//wQAAgADAAIAAAAAAAQAAgADAAIAAAABAAQAAgADAAIAAAA=")
 tile_set = SubResource("TileSet_con2f")
 
-[node name="Menu Labels2" type="RichTextLabel" parent="."]
+[node name="PlayLabel Back" type="RichTextLabel" parent="."]
 texture_filter = 1
 offset_left = -96.0
 offset_top = -131.0
 offset_right = -33.0
-offset_bottom = -40.0
+offset_bottom = -108.0
 scale = Vector2(4, 4)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-text = "Play
-Options
-Scores
-Credits"
+text = "Play"
 scroll_active = false
 
-[node name="Menu Labels" type="RichTextLabel" parent="."]
+[node name="PlayLabel" type="RichTextLabel" parent="."]
 texture_filter = 1
 offset_left = -101.0
 offset_top = -136.0
 offset_right = -38.0
-offset_bottom = -45.0
+offset_bottom = -111.0
 scale = Vector2(4, 4)
-text = "Play
-Options
-Scores
-Credits"
+mouse_default_cursor_shape = 2
+text = "Play"
+scroll_active = false
+
+[node name="OptionsLabel Back" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = -95.0
+offset_top = -39.0
+offset_right = -32.0
+offset_bottom = -16.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Options"
+scroll_active = false
+
+[node name="OptionsLabel" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = -100.0
+offset_top = -44.0
+offset_right = -37.0
+offset_bottom = -19.0
+scale = Vector2(4, 4)
+mouse_default_cursor_shape = 2
+text = "Options"
+scroll_active = false
+
+[node name="ScoresLabel Back" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = -95.0
+offset_top = 53.0
+offset_right = -32.0
+offset_bottom = 76.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Scores"
+scroll_active = false
+
+[node name="ScoresLabel" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = -100.0
+offset_top = 48.0
+offset_right = -37.0
+offset_bottom = 73.0
+scale = Vector2(4, 4)
+mouse_default_cursor_shape = 2
+text = "Scores"
+scroll_active = false
+
+[node name="CreditsLabel Back" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = -95.0
+offset_top = 145.0
+offset_right = -32.0
+offset_bottom = 168.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Credits"
+scroll_active = false
+
+[node name="CreditsLabel" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = -100.0
+offset_top = 140.0
+offset_right = -37.0
+offset_bottom = 165.0
+scale = Vector2(4, 4)
+mouse_default_cursor_shape = 2
+text = "Credits"
 scroll_active = false
 
 [node name="Pointer" type="AnimatedSprite2D" parent="."]
@@ -89,5 +150,14 @@ position = Vector2(-131, -87)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_con2f")
 autoplay = "default"
-frame_progress = 0.43045
+frame_progress = 0.665716
 script = ExtResource("3_con2f")
+
+[connection signal="gui_input" from="PlayLabel" to="Pointer" method="_on_gui_input"]
+[connection signal="mouse_entered" from="PlayLabel" to="Pointer" method="_on_play_label_mouse_entered"]
+[connection signal="gui_input" from="OptionsLabel" to="Pointer" method="_on_gui_input"]
+[connection signal="mouse_entered" from="OptionsLabel" to="Pointer" method="_on_options_label_mouse_entered"]
+[connection signal="gui_input" from="ScoresLabel" to="Pointer" method="_on_gui_input"]
+[connection signal="mouse_entered" from="ScoresLabel" to="Pointer" method="_on_scores_label_mouse_entered"]
+[connection signal="gui_input" from="CreditsLabel" to="Pointer" method="_on_gui_input"]
+[connection signal="mouse_entered" from="CreditsLabel" to="Pointer" method="_on_credits_label_mouse_entered"]

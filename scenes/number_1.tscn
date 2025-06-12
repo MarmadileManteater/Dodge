@@ -463,7 +463,7 @@ tile_map_data = PackedByteArray("AAD+////AQACAAAAAAD+/wAAAQABAAAAAAD+/wEAAQABAAE
 tile_set = SubResource("TileSet_hnlpu")
 
 [node name="Player" type="RigidBody2D" parent="."]
-position = Vector2(575, 334)
+position = Vector2(573, 336)
 collision_layer = 7
 collision_mask = 7
 gravity_scale = 0.0
