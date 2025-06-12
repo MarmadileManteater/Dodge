@@ -10,11 +10,13 @@ var speed = 200
 var directions_pressed = []
 
 var animated_sprite: AnimatedSprite2D
+var explosion_sound_effect: AudioStreamPlayer2D
 var death_timer: Timer
 
 func _enter_tree() -> void:
 	animated_sprite = find_child("AnimatedSprite2D")
 	death_timer = find_child("DeathTimer")
+	explosion_sound_effect = find_child("Explosion")
 
 func _input(event: InputEvent) -> void:
 	if alive and mode == "game":
@@ -45,6 +47,7 @@ func _physics_process(delta: float) -> void:
 		# prevent collisions after the first one
 		set_physics_process(false)
 		animated_sprite.animation = "explosion"
+		explosion_sound_effect.play()
 		alive = false
 		if (mode == "demo"):
 			# use a timer to restart when in demo mode
@@ -60,6 +63,7 @@ func reset():
 	if (alive):
 		# reset animation when alive
 		animated_sprite.animation = "idle_down"
+		animated_sprite.play()
 	contact_monitor = true
 	death_timer.stop()
 	# set position of rigidbody
