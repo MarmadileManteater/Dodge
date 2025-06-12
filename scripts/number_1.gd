@@ -52,7 +52,8 @@ func _on_progression_timer_timeout() -> void:
 		progression+=1
 		score.text = "%d" % progression
 		score_backdrop.text = "%d" % progression
-		projectile_timer.wait_time = 1.0 / (progression + 1)
+		projectile_timer.wait_time = 1.0 / (progression + 1
+		)
 	
 func _enter_tree() -> void:
 	player = find_child("Player")
@@ -122,6 +123,7 @@ func reset():
 	for child in projectile_area.get_children():
 		projectile_area.remove_child(child)
 	progression = 0
+	projectile_timer.wait_time = 1.0
 	counter = 0
 	player.reset()
 	
