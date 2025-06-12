@@ -51,10 +51,9 @@ func _on_credits_label_mouse_entered() -> void:
 		set_cursor_position(MenuItem.CREDITS)
 
 func _on_gui_input(event: InputEvent) -> void:
-	if (submenu == null):
-		# allow clicking menu items
-		if (event is InputEventMouseButton):
-			var event_action = InputEventAction.new()
-			event_action.action = "ui_accept"
-			event_action.pressed = event.pressed
-			Input.parse_input_event(event_action)
+	# allow clicking menu items
+	if (event is InputEventMouseButton):
+		var event_action = InputEventAction.new()
+		event_action.action = "ui_accept"
+		event_action.pressed = event.pressed
+		Input.parse_input_event(event_action)

@@ -8,6 +8,7 @@ var outline: Line2D
 var projectile_area: Node2D
 var projectiles: Array
 var projectile_timer: Timer
+var progression_timer: Timer
 var counter = 0
 var progression = 0
 var score: RichTextLabel
@@ -71,6 +72,7 @@ func _enter_tree() -> void:
 	projectiles = find_children("*-Projectile")
 	projectile_area = find_child("Projectiles")
 	projectile_timer = find_child("ProjectileTimer")
+	progression_timer = find_child("ProgressionTimer")
 
 func _input(event: InputEvent) -> void:
 	if (menu.visible):
@@ -81,21 +83,17 @@ func _input(event: InputEvent) -> void:
 					menu.visible = false
 				if (menu.pointer.cursor_position == Pointer.MenuItem.OPTIONS):
 					menu.toggle_audio_settings()
-					menu.set_default_cursor_shape(Control.CursorShape.CURSOR_ARROW)
 				if (menu.pointer.cursor_position == Pointer.MenuItem.SCORES):
 					menu.set_scores_text(get_scores_text())
 					menu.toggle_high_scores()
-					menu.set_default_cursor_shape(Control.CursorShape.CURSOR_ARROW)
 				if (menu.pointer.cursor_position == Pointer.MenuItem.CREDITS):
 					menu.pointer.submenu = "credits"
 					menu.credits.start()
-					menu.set_default_cursor_shape(Control.CursorShape.CURSOR_ARROW)
 					menu.pointer.visible = false
 		elif (menu.pointer.submenu == "options"):	
 			if (event.is_action_pressed("ui_accept")):
 				menu.pointer.submenu = null
 				menu.toggle_audio_settings()
-				menu.set_default_cursor_shape(Control.CursorShape.CURSOR_POINTING_HAND)
 				menu.pointer.set_cursor_position(Pointer.MenuItem.OPTIONS)
 			if (event.is_action_pressed("ui_left", true)):
 				set_volume_relatively(-1)
@@ -106,14 +104,12 @@ func _input(event: InputEvent) -> void:
 				menu.pointer.submenu = null
 				menu.toggle_high_scores()
 				menu.pointer.set_cursor_position(Pointer.MenuItem.SCORES)
-				menu.set_default_cursor_shape(Control.CursorShape.CURSOR_POINTING_HAND)
 		elif (menu.pointer.submenu == "credits"):
 			if (event.is_action_pressed("ui_accept")):
 				menu.credits.stop()
 				menu.pointer.submenu = null
 				menu.pointer.visible = true
 				menu.pointer.set_cursor_position(Pointer.MenuItem.CREDITS)
-				menu.set_default_cursor_shape(Control.CursorShape.CURSOR_POINTING_HAND)
 	if (event.is_action_pressed("ui_up")):
 		menu.pointer.set_cursor_position_relatively(-1)
 	if (event.is_action_pressed("ui_down")):
@@ -128,6 +124,9 @@ func reset():
 	player.reset()
 	
 func play():
+	progression = 0
+	progression_timer.stop()
+	progression_timer.start()
 	new_high_score.visible = false
 	if (player.mode == "demo" and !background_music.stream_paused):
 		background_music.play()
