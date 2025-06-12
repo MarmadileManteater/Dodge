@@ -697,4 +697,5 @@ autostart = true
 [connection signal="timeout" from="ProgressionTimer" to="." method="_on_progression_timer_timeout"]
 [connection signal="timeout" from="DemoLabel Container/DemoTimer" to="." method="_on_demo_timer_timeout"]
 [connection signal="tree_entered" from="Menu" to="." method="_on_menu_tree_entered"]
+[connection signal="volume_change" from="Menu" to="." method="_on_menu_volume_change"]
 [connection signal="timeout" from="New High Score/FlickerTimer" to="New High Score/FlickerBox" method="_on_flicker_timer_timeout"]

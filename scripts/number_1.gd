@@ -171,11 +171,15 @@ func _on_death_timer_timeout() -> void:
 		
 func set_volume_relatively(volume, position = menu.pointer.cursor_position):
 	if (position == 0):
-		if ((bgm_volume == volume_range and volume > 0) 
-		or (bgm_volume == -volume_range and volume < 0)):
+		if ((bgm_volume + volume > volume_range) 
+		or (bgm_volume + volume < -volume_range)):
 			volume = 0
 		bgm_volume += volume
-		bgm_muted = bgm_volume == -volume_range
+		if (bgm_volume < -volume_range):
+			bgm_volume = -volume_range
+		if (bgm_volume > volume_range):
+			bgm_volume = volume_range
+		bgm_muted = floor(bgm_volume) <= -volume_range
 		# won't set before music loads
 		background_music.stream_paused = bgm_muted
 		if (!background_music.playing && !bgm_muted):
@@ -183,11 +187,15 @@ func set_volume_relatively(volume, position = menu.pointer.cursor_position):
 		background_music.volume_db += volume
 		menu.set_bgm_volume_slider(volume * 2)
 	if (position == 1):
-		if ((sfx_volume == volume_range and volume > 0) 
-		or (sfx_volume == -volume_range and volume < 0)):
+		if ((sfx_volume + volume > volume_range) 
+		or (sfx_volume + volume < -volume_range)):
 			volume = 0
 		sfx_volume += volume
-		player.mute_explosion = sfx_volume == -volume_range
+		if (sfx_volume < -volume_range):
+			sfx_volume = -volume_range
+		if (sfx_volume > volume_range):
+			sfx_volume = volume_range
+		player.mute_explosion = floor(sfx_volume) <= -volume_range
 		player.explosion_sound_effect.volume_db += volume
 		menu.set_sfx_volume_slider(volume * 2)
 	
@@ -241,3 +249,8 @@ func _on_menu_tree_entered() -> void:
 	load_game()
 	if (!bgm_muted):
 		background_music.play()
+
+
+func _on_menu_volume_change(volume) -> void:
+	print(int(volume))
+	set_volume_relatively(volume / 8)

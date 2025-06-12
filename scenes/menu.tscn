@@ -321,15 +321,47 @@ scale = Vector2(4, 4)
 tile_map_data = PackedByteArray("AAAFAP7/AAAAAAAAAAAGAP7/AAABAAAAAAAHAP7/AAABAAAAAAAIAP7/AAABAAAAAAAJAP7/AAABAAAAAAAKAP7/AAACAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAAIAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAAAAAACAAAAAAA=")
 tile_set = SubResource("TileSet_g3eks")
 
+[node name="Effect Hover" type="Label" parent="Audio Settings"]
+offset_left = 61.0
+offset_top = -3.75
+offset_right = 160.0
+offset_bottom = 19.25
+mouse_filter = 0
+
 [node name="Effect Slider" type="Sprite2D" parent="Audio Settings"]
 position = Vector2(95.5, 8)
 scale = Vector2(1, 1.25)
 texture = ExtResource("5_4ytvr")
 
+[node name="Click Listener" type="Label" parent="Audio Settings/Effect Slider"]
+offset_left = -2.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 18.0
+scale = Vector2(0.588617, 0.444085)
+mouse_filter = 0
+theme_override_font_sizes/font_size = 0
+
+[node name="Music Hover" type="Label" parent="Audio Settings"]
+offset_left = 61.0
+offset_top = -35.0
+offset_right = 131.0
+offset_bottom = -12.0
+mouse_filter = 0
+
 [node name="Music Slider" type="Sprite2D" parent="Audio Settings"]
 position = Vector2(95.5, -24)
 scale = Vector2(1, 1.25)
 texture = ExtResource("5_4ytvr")
+
+[node name="Click Listener" type="Label" parent="Audio Settings/Music Slider"]
+offset_left = -2.0
+offset_top = -5.2
+offset_right = 5.0
+offset_bottom = 17.8
+scale = Vector2(0.588617, 0.444085)
+mouse_filter = 0
+theme_override_font_sizes/font_size = 0
 
 [node name="Music Label Back" type="RichTextLabel" parent="Audio Settings"]
 offset_left = 134.5
@@ -760,6 +792,10 @@ scroll_active = false
 [connection signal="mouse_entered" from="ScoresLabel" to="Pointer" method="_on_scores_label_mouse_entered"]
 [connection signal="gui_input" from="CreditsLabel" to="Pointer" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CreditsLabel" to="Pointer" method="_on_credits_label_mouse_entered"]
+[connection signal="mouse_entered" from="Audio Settings/Effect Hover" to="Pointer" method="_on_effect_hover_mouse_entered"]
+[connection signal="gui_input" from="Audio Settings/Effect Slider/Click Listener" to="." method="_on_click_listener_effect_slider"]
+[connection signal="mouse_entered" from="Audio Settings/Music Hover" to="Pointer" method="_on_music_hover_mouse_entered"]
+[connection signal="gui_input" from="Audio Settings/Music Slider/Click Listener" to="." method="_on_click_listener_music_slider"]
 [connection signal="meta_clicked" from="Credits/Scrolling Content/Sprites Title2" to="." method="_meta_clicked"]
 [connection signal="meta_clicked" from="Credits/Scrolling Content/Zelda like character2" to="." method="_meta_clicked"]
 [connection signal="meta_clicked" from="Credits/Scrolling Content/Grass Tiles Basic2" to="." method="_meta_clicked"]
