@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://btxnb4hdoanqc"]
+[gd_scene load_steps=71 format=4 uid="uid://btxnb4hdoanqc"]
 
 [ext_resource type="Script" uid="uid://btmurkrw0wt34" path="res://scripts/number_1.gd" id="1_2ane3"]
 [ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="1_hqiah"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bqnbgso0b61h6" path="res://scripts/projectile.gd" id="5_sj2e1"]
 [ext_resource type="AudioStream" uid="uid://bo50lqguyq5b3" path="res://assets/sounds/explosion.ogg" id="6_hnlpu"]
 [ext_resource type="AudioStream" uid="uid://vpqmiowahasq" path="res://assets/music/The Adventure Begins 8-bit remix.ogg" id="8_ubbun"]
+[ext_resource type="Script" uid="uid://bn62qmgchw447" path="res://scripts/flicker_box.gd" id="9_58b4l"]
 [ext_resource type="PackedScene" uid="uid://p1fa37oi3mua" path="res://scenes/menu.tscn" id="10_gj6lo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ubbun"]
@@ -655,9 +656,45 @@ autoplay = true
 [node name="Menu" parent="." instance=ExtResource("10_gj6lo")]
 position = Vector2(233, 339)
 
+[node name="New High Score" type="Node2D" parent="."]
+visible = false
+position = Vector2(548, 14)
+
+[node name="FlickerBox" type="Node2D" parent="New High Score"]
+script = ExtResource("9_58b4l")
+
+[node name="New High Score Label Backdrop" type="RichTextLabel" parent="New High Score/FlickerBox"]
+texture_filter = 1
+offset_left = 84.0
+offset_top = 41.0
+offset_right = 216.0
+offset_bottom = 67.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[i]new high score![/i]"
+scroll_active = false
+
+[node name="New High Score Label" type="RichTextLabel" parent="New High Score/FlickerBox"]
+texture_filter = 1
+offset_left = 79.0
+offset_top = 36.0
+offset_right = 206.0
+offset_bottom = 62.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(1, 1, 0, 1)
+bbcode_enabled = true
+text = "[i]new high score![/i]"
+scroll_active = false
+
+[node name="FlickerTimer" type="Timer" parent="New High Score"]
+wait_time = 0.5
+autostart = true
+
 [connection signal="timeout" from="Player/DemoTimer" to="Player" method="_on_demo_timer_timeout"]
 [connection signal="timeout" from="Player/DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="body_entered" from="Fireball-Projectile" to="Fireball-Projectile" method="_on_body_entered"]
 [connection signal="timeout" from="ProjectileTimer" to="." method="_on_projectile_timer_timeout"]
 [connection signal="timeout" from="ProgressionTimer" to="." method="_on_progression_timer_timeout"]
 [connection signal="timeout" from="DemoLabel Container/DemoTimer" to="." method="_on_demo_timer_timeout"]
+[connection signal="timeout" from="New High Score/FlickerTimer" to="New High Score/FlickerBox" method="_on_flicker_timer_timeout"]

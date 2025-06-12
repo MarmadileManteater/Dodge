@@ -22,6 +22,8 @@ var menu: Menu
 var volume_range = 13
 var bgm_volume = 0
 var sfx_volume = 0
+var high_scores = [3,3,3]
+var new_high_score: Node2D
 
 func generate_coord_around_viewport():
 	return outline.get_point_position(randi() % outline.get_point_count())
@@ -60,6 +62,7 @@ func _enter_tree() -> void:
 	demo_label = find_child("Demo")
 	demo_label_backdrop = find_child("Demo Backdrop")
 	demo_label_container = find_child("DemoLabel Container")
+	new_high_score = find_child("New High Score")
 	
 	background_music = find_child("Background Music")
 	
@@ -78,6 +81,9 @@ func _input(event: InputEvent) -> void:
 					menu.visible = false
 				if (menu.pointer.cursor_position == Pointer.MenuItem.OPTIONS):
 					menu.toggle_audio_settings()
+				if (menu.pointer.cursor_position == Pointer.MenuItem.SCORES):
+					menu.set_scores_text(get_scores_text())
+					menu.toggle_high_scores()
 		elif (menu.pointer.submenu == "options"):	
 			if (event.is_action_pressed("ui_accept")):
 				menu.pointer.submenu = null
@@ -87,6 +93,11 @@ func _input(event: InputEvent) -> void:
 				set_volume_relatively(-1)
 			if (event.is_action_pressed("ui_right", true)):
 				set_volume_relatively(1)
+		elif (menu.pointer.submenu == "high_scores"):
+			if (event.is_action_pressed("ui_accept")):
+				menu.pointer.submenu = null
+				menu.toggle_high_scores()
+				menu.pointer.set_cursor_position(Pointer.MenuItem.SCORES)
 	if (event.is_action_pressed("ui_up")):
 		menu.pointer.set_cursor_position_relatively(-1)
 	if (event.is_action_pressed("ui_down")):
@@ -101,6 +112,7 @@ func reset():
 	player.reset()
 	
 func play():
+	new_high_score.visible = false
 	if (player.mode == "demo" and !background_music.stream_paused):
 		background_music.play()
 	demo_label_container.visible = false
@@ -123,6 +135,8 @@ func _on_death_timer_timeout() -> void:
 	if (player.mode == "demo"):
 		reset()
 	else:
+		if add_score(progression) > 0:
+			new_high_score.visible = true
 		menu.set_first_option_text("Restart")
 		menu.visible = true
 		menu.pointer.set_cursor_position(0)
@@ -146,3 +160,21 @@ func set_volume_relatively(volume):
 			player.explosion_sound_effect.volume_db += volume
 			menu.set_sfx_volume_slider(volume * 2)
 	
+func add_score(score):
+	for i in range(0, len(high_scores)):
+		if (high_scores[i] < score):
+			high_scores.insert(i, score)
+			if (len(high_scores) > 3):
+				high_scores.pop_back()
+			return 1
+	if (len(high_scores) < 3):
+		high_scores.append(score)
+		return 0
+	else:
+		return -1
+		
+func get_scores_text():
+	var string = ""
+	for i in range(0, len(high_scores)):
+		string += "%d. %d\n" % [ i + 1, high_scores[i] ]
+	return string

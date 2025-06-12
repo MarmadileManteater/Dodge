@@ -169,7 +169,7 @@ position = Vector2(-131, -87)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_con2f")
 autoplay = "default"
-frame_progress = 0.355438
+frame_progress = 0.995551
 script = ExtResource("3_con2f")
 
 [node name="Audio Settings" type="TileMapLayer" parent="."]
@@ -243,6 +243,52 @@ offset_top = -55.0
 offset_right = 146.0
 offset_bottom = -34.0
 text = "Volume"
+scroll_active = false
+
+[node name="High Scores" type="Node2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(486, -3)
+scale = Vector2(4, 4)
+
+[node name="High Score Label Backdrop" type="RichTextLabel" parent="High Scores"]
+offset_left = -50.25
+offset_top = -43.25
+offset_right = 61.75
+offset_bottom = -18.25
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "High Scores"
+scroll_active = false
+
+[node name="High Score Label" type="RichTextLabel" parent="High Scores"]
+offset_left = -51.0
+offset_top = -43.75
+offset_right = 42.0
+offset_bottom = -18.75
+bbcode_enabled = true
+text = "High Scores"
+scroll_active = false
+
+[node name="Scores Label Backdrop" type="RichTextLabel" parent="High Scores"]
+offset_left = -51.5
+offset_top = -18.5
+offset_right = 44.5
+offset_bottom = 55.5
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "1.
+2.
+3."
+scroll_active = false
+
+[node name="Scores Label" type="RichTextLabel" parent="High Scores"]
+offset_left = -52.0
+offset_top = -19.0
+offset_right = 44.0
+offset_bottom = 55.0
+text = "1.
+2.
+3."
 scroll_active = false
 
 [connection signal="gui_input" from="PlayLabel" to="Pointer" method="_on_gui_input"]
