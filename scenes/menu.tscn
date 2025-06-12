@@ -1,10 +1,15 @@
-[gd_scene load_steps=13 format=4 uid="uid://p1fa37oi3mua"]
+[gd_scene load_steps=36 format=4 uid="uid://p1fa37oi3mua"]
 
 [ext_resource type="Script" uid="uid://ctt22yxhgsb7c" path="res://scripts/menu.gd" id="1_vjb58"]
 [ext_resource type="Texture2D" uid="uid://bkrqnncsgvwdt" path="res://assets/spritesheets/Golden UI tileset.png" id="1_yqeox"]
 [ext_resource type="Script" uid="uid://bj8m0fu718upq" path="res://scripts/pointer.gd" id="3_con2f"]
 [ext_resource type="Texture2D" uid="uid://bainw1icohgyn" path="res://assets/spritesheets/Golden UI scales.png" id="3_mhnvy"]
 [ext_resource type="Texture2D" uid="uid://duexdknmvq4bg" path="res://assets/spritesheets/golden-ui-bar.png" id="5_4ytvr"]
+[ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="6_g3eks"]
+[ext_resource type="Script" uid="uid://bo1uui8aidsux" path="res://scripts/credits.gd" id="6_v86rl"]
+[ext_resource type="Texture2D" uid="uid://ca1wfk4lmtibw" path="res://assets/spritesheets/grass-tiles-basic.png" id="8_13sgg"]
+[ext_resource type="Texture2D" uid="uid://mnqel2hj68lq" path="res://assets/spritesheets/16x16-rpg-icons.png" id="9_i6lef"]
+[ext_resource type="Texture2D" uid="uid://bqjg2i4i7vbsu" path="res://assets/spritesheets/bird_dead.png" id="10_70i5f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vjb58"]
 texture = ExtResource("1_yqeox")
@@ -65,6 +70,142 @@ texture_region_size = Vector2i(12, 16)
 [sub_resource type="TileSet" id="TileSet_g3eks"]
 tile_size = Vector2i(12, 16)
 sources/0 = SubResource("TileSetAtlasSource_4ytvr")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g3eks"]
+texture = ExtResource("1_yqeox")
+0:0/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:2/0 = 0
+4:1/0 = 0
+4:0/0 = 0
+3:0/0 = 0
+2:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_v86rl"]
+sources/0 = SubResource("TileSetAtlasSource_g3eks")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v86rl"]
+atlas = ExtResource("6_g3eks")
+region = Rect2(48, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13sgg"]
+atlas = ExtResource("6_g3eks")
+region = Rect2(96, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6lef"]
+atlas = ExtResource("6_g3eks")
+region = Rect2(144, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70i5f"]
+atlas = ExtResource("6_g3eks")
+region = Rect2(192, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mj5lg"]
+atlas = ExtResource("6_g3eks")
+region = Rect2(240, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ufwb2"]
+atlas = ExtResource("6_g3eks")
+region = Rect2(288, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cdou"]
+atlas = ExtResource("6_g3eks")
+region = Rect2(336, 192, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i42df"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v86rl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13sgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i6lef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70i5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mj5lg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ufwb2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cdou")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i42df"]
+atlas = ExtResource("9_i6lef")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7jp70"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i42df")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jp70"]
+atlas = ExtResource("10_70i5f")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxgkd"]
+atlas = ExtResource("10_70i5f")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6gyw"]
+atlas = ExtResource("10_70i5f")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dmrc"]
+atlas = ExtResource("10_70i5f")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_81l6r"]
+atlas = ExtResource("10_70i5f")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rsfmq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7jp70")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxgkd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6gyw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dmrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_81l6r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_vjb58")
@@ -169,7 +310,7 @@ position = Vector2(-131, -87)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_con2f")
 autoplay = "default"
-frame_progress = 0.995551
+frame_progress = 0.333773
 script = ExtResource("3_con2f")
 
 [node name="Audio Settings" type="TileMapLayer" parent="."]
@@ -291,6 +432,326 @@ text = "1.
 3."
 scroll_active = false
 
+[node name="Credits" type="Node2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(588, -46)
+script = ExtResource("6_v86rl")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Credits"]
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAD6//z/AAAAAAEAAAD6//3/AAAAAAEAAAD6//7/AAAAAAEAAAD6////AAAAAAEAAAD6/wAAAAAAAAEAAAD6/wEAAAAAAAEAAAD6/wIAAAAAAAEAAAD6/wMAAAAAAAEAAAD6/wQAAAAAAAEAAAD6/wUAAAAAAAEAAAD6/wYAAAAAAAEAAAD6/wcAAAAAAAEAAAD6/wgAAAAAAAEAAAACAPz/AAADAAEAAAACAP3/AAADAAEAAAACAP7/AAADAAEAAAACAP//AAADAAEAAAACAAAAAAADAAEAAAACAAEAAAADAAEAAAACAAIAAAADAAEAAAACAAMAAAADAAEAAAACAAQAAAADAAEAAAACAAUAAAADAAEAAAACAAYAAAADAAEAAAACAAcAAAADAAEAAAACAAgAAAADAAEAAAAEAPz/AAAEAAEAAAAEAP3/AAAEAAEAAAAEAP7/AAAEAAEAAAAEAP//AAAEAAEAAAAEAAAAAAAEAAEAAAAEAAEAAAAEAAEAAAAEAAIAAAAEAAEAAAAEAAMAAAAEAAEAAAAEAAQAAAAEAAEAAAAEAAUAAAAEAAEAAAAEAAYAAAAEAAEAAAAEAAcAAAAEAAEAAAAEAAgAAAAEAAEAAAAEAPv/AAAEAAEAAAAEAPr/AAAEAAEAAAAEAPn/AAAEAAEAAAAEAPj/AAAEAAEAAAD6//v/AAAAAAEAAAD6//r/AAAAAAEAAAD6//n/AAAAAAEAAAD6//j/AAAAAAEAAAD7//j/AAADAAEAAAD7//n/AAADAAEAAAD7//r/AAADAAEAAAD7//v/AAADAAEAAAD7//z/AAADAAEAAAD7//3/AAADAAEAAAD7//7/AAADAAEAAAD7////AAADAAEAAAD7/wAAAAADAAEAAAD7/wEAAAADAAEAAAD7/wIAAAADAAEAAAD7/wMAAAADAAEAAAD7/wQAAAADAAEAAAD7/wUAAAADAAEAAAD7/wYAAAADAAEAAAD7/wcAAAADAAEAAAD7/wgAAAADAAEAAAD8//j/AAADAAEAAAD8//n/AAADAAEAAAD8//r/AAADAAEAAAD8//v/AAADAAEAAAD8//z/AAADAAEAAAD8//3/AAADAAEAAAD8//7/AAADAAEAAAD8////AAADAAEAAAD8/wAAAAADAAEAAAD8/wEAAAADAAEAAAD8/wIAAAADAAEAAAD8/wMAAAADAAEAAAD8/wQAAAADAAEAAAD8/wUAAAADAAEAAAD8/wYAAAADAAEAAAD8/wcAAAADAAEAAAD8/wgAAAADAAEAAAD9//j/AAADAAEAAAD9//n/AAADAAEAAAD9//r/AAADAAEAAAD9//v/AAADAAEAAAD9//z/AAADAAEAAAD9//3/AAADAAEAAAD9//7/AAADAAEAAAD9////AAADAAEAAAD9/wAAAAADAAEAAAD9/wEAAAADAAEAAAD9/wIAAAADAAEAAAD9/wMAAAADAAEAAAD9/wQAAAADAAEAAAD9/wUAAAADAAEAAAD9/wYAAAADAAEAAAD9/wcAAAADAAEAAAD9/wgAAAADAAEAAAD+//j/AAADAAEAAAD+//n/AAADAAEAAAD+//r/AAADAAEAAAD+//v/AAADAAEAAAD+//z/AAADAAEAAAD+//3/AAADAAEAAAD+//7/AAADAAEAAAD+////AAADAAEAAAD+/wAAAAADAAEAAAD+/wEAAAADAAEAAAD+/wIAAAADAAEAAAD+/wMAAAADAAEAAAD+/wQAAAADAAEAAAD+/wUAAAADAAEAAAD+/wYAAAADAAEAAAD+/wcAAAADAAEAAAD+/wgAAAADAAEAAAD///j/AAADAAEAAAD///n/AAADAAEAAAD///r/AAADAAEAAAD///v/AAADAAEAAAD///z/AAADAAEAAAD///3/AAADAAEAAAD///7/AAADAAEAAAD/////AAADAAEAAAD//wAAAAADAAEAAAD//wEAAAADAAEAAAD//wIAAAADAAEAAAD//wMAAAADAAEAAAD//wQAAAADAAEAAAD//wUAAAADAAEAAAD//wYAAAADAAEAAAD//wcAAAADAAEAAAD//wgAAAADAAEAAAAAAPj/AAADAAEAAAAAAPn/AAADAAEAAAAAAPr/AAADAAEAAAAAAPv/AAADAAEAAAAAAPz/AAADAAEAAAAAAP3/AAADAAEAAAAAAP7/AAADAAEAAAAAAP//AAADAAEAAAAAAAAAAAADAAEAAAAAAAEAAAADAAEAAAAAAAIAAAADAAEAAAAAAAMAAAADAAEAAAAAAAQAAAADAAEAAAAAAAUAAAADAAEAAAAAAAYAAAADAAEAAAAAAAcAAAADAAEAAAAAAAgAAAADAAEAAAABAPj/AAADAAEAAAABAPn/AAADAAEAAAABAPr/AAADAAEAAAABAPv/AAADAAEAAAABAPz/AAADAAEAAAABAP3/AAADAAEAAAABAP7/AAADAAEAAAABAP//AAADAAEAAAABAAAAAAADAAEAAAABAAEAAAADAAEAAAABAAIAAAADAAEAAAABAAMAAAADAAEAAAABAAQAAAADAAEAAAABAAUAAAADAAEAAAABAAYAAAADAAEAAAABAAcAAAADAAEAAAABAAgAAAADAAEAAAACAPj/AAADAAEAAAACAPn/AAADAAEAAAACAPr/AAADAAEAAAACAPv/AAADAAEAAAADAPj/AAADAAEAAAADAPn/AAADAAEAAAADAPr/AAADAAEAAAADAPv/AAADAAEAAAADAPz/AAADAAEAAAADAP3/AAADAAEAAAADAP7/AAADAAEAAAADAP//AAADAAEAAAADAAAAAAADAAEAAAADAAEAAAADAAEAAAADAAIAAAADAAEAAAADAAMAAAADAAEAAAADAAQAAAADAAEAAAADAAUAAAADAAEAAAADAAYAAAADAAEAAAADAAcAAAADAAEAAAADAAgAAAADAAEAAAA=")
+tile_set = SubResource("TileSet_v86rl")
+
+[node name="Scrolling Content" type="Node2D" parent="Credits"]
+
+[node name="Sprites Title2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = -226.0
+offset_right = -181.0
+offset_bottom = -108.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "Sprites:"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Zelda like character2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = -139.0
+offset_right = -179.0
+offset_bottom = -43.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/zelda-like-character]Zelda like character[/url]
+Author: [url=https://opengameart.org/users/16pixel]16Pixel[/url]
+License: 
+[url=http://creativecommons.org/licenses/by-sa/4.0/]CC-BY-SA 4.0[/url]"
+scroll_active = false
+
+[node name="Grass Tiles Basic2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = 279.0
+offset_right = -181.0
+offset_bottom = 399.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/grass-tiles-basic]Grass Tiles Basic[/url]
+Author: [url=https://opengameart.org/users/colourful-lungs]ColourfulLungs[/url]
+License: [url=http://creativecommons.org/licenses/by-sa/4.0/]CC0[/url]"
+scroll_active = false
+
+[node name="16x16 RPG Icons2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = 1007.0
+offset_right = -179.0
+offset_bottom = 1103.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/16x16-rpg-icons]16x16 RPG Icons[/url]
+Author: [url=https://opengameart.org/users/16pixel]16Pixel[/url]
+License: 
+[url=http://creativecommons.org/licenses/by-sa/4.0/]CC-BY-SA 4.0[/url]"
+scroll_active = false
+
+[node name="Explosion Effect2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = 1442.0
+offset_right = -179.0
+offset_bottom = 1560.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[url= https://opengameart.org/content/explosion-effect-pixel-art]Explosion Effect (pixel art)[/url]
+Author: [url=https://opengameart.org/users/lixing]LIXING[/url]
+License: 
+[url=http://creativecommons.org/licenses/by-sa/4.0/]CC-BY-SA 4.0[/url]"
+scroll_active = false
+
+[node name="Golden UI2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = 1980.0
+offset_right = -179.0
+offset_bottom = 2052.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/golden-ui]Golden UI[/url]
+Author: [url=https://opengameart.org/users/buch]Buch[/url]
+License: [url=http://creativecommons.org/publicdomain/zero/1.0/]CC0[/url]"
+scroll_active = false
+
+[node name="Music and Effects Title2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = 2591.0
+offset_right = -181.0
+offset_bottom = 2709.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "Music & Effects:"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Explosions Sound Effect2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = 2687.0
+offset_right = -179.0
+offset_bottom = 2759.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/explosion-0]Explosion[/url]
+Author: [url=https://opengameart.org/users/tinyworlds]TinyWorlds[/url]
+License: [url=http://creativecommons.org/publicdomain/zero/1.0/]CC0[/url]"
+scroll_active = false
+
+[node name="The Adventure Begins 8-bit Remix2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = 3018.0
+offset_right = -179.0
+offset_bottom = 3117.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/the-adventure-begins-8-bit-remix]The Adventure Begins 8-bit Remix[/url]
+Author: [url=https://opengameart.org/users/bart]bart[/url]
+License: [url=http://creativecommons.org/licenses/by/3.0/]CC-BY 3.0[/url]"
+scroll_active = false
+
+[node name="Sprites Title" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = -230.0
+offset_right = -185.0
+offset_bottom = -112.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "Sprites:"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Zelda like character" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = -143.0
+offset_right = -183.0
+offset_bottom = -47.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/zelda-like-character]Zelda like character[/url]
+Author: [url=https://opengameart.org/users/16pixel]16Pixel[/url]
+License: 
+[url=http://creativecommons.org/licenses/by-sa/4.0/]CC-BY-SA 4.0[/url]"
+scroll_active = false
+
+[node name="Zelda like character animated" type="AnimatedSprite2D" parent="Credits/Scrolling Content"]
+position = Vector2(176, 131)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_i42df")
+autoplay = "default"
+
+[node name="Seperator" type="Line2D" parent="Credits/Scrolling Content"]
+position = Vector2(7, 11)
+points = PackedVector2Array(-321, 247, 233, 247)
+width = 2.0
+
+[node name="Grass Tiles Basic" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = 275.0
+offset_right = -185.0
+offset_bottom = 395.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/grass-tiles-basic]Grass Tiles Basic[/url]
+Author: [url=https://opengameart.org/users/colourful-lungs]ColourfulLungs[/url]
+License: [url=http://creativecommons.org/licenses/by-sa/4.0/]CC0[/url]"
+scroll_active = false
+
+[node name="Grass Tiles Basic Spritesheet" type="Sprite2D" parent="Credits/Scrolling Content"]
+position = Vector2(-39, 793)
+scale = Vector2(4, 4)
+texture = ExtResource("8_13sgg")
+
+[node name="Seperator2" type="Line2D" parent="Credits/Scrolling Content"]
+position = Vector2(7, 724)
+points = PackedVector2Array(-321, 247, 233, 247)
+width = 2.0
+
+[node name="16x16 RPG Icons" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = 1003.0
+offset_right = -183.0
+offset_bottom = 1099.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/16x16-rpg-icons]16x16 RPG Icons[/url]
+Author: [url=https://opengameart.org/users/16pixel]16Pixel[/url]
+License: 
+[url=http://creativecommons.org/licenses/by-sa/4.0/]CC-BY-SA 4.0[/url]"
+scroll_active = false
+
+[node name="Fire Sprite" type="AnimatedSprite2D" parent="Credits/Scrolling Content"]
+position = Vector2(220, 1051)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_7jp70")
+
+[node name="Seperator3" type="Line2D" parent="Credits/Scrolling Content"]
+position = Vector2(7, 1163)
+points = PackedVector2Array(-321, 247, 233, 247)
+width = 2.0
+
+[node name="Explosion Effect" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = 1438.0
+offset_right = -183.0
+offset_bottom = 1556.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "[url= https://opengameart.org/content/explosion-effect-pixel-art]Explosion Effect (pixel art)[/url]
+Author: [url=https://opengameart.org/users/lixing]LIXING[/url]
+License: 
+[url=http://creativecommons.org/licenses/by-sa/4.0/]CC-BY-SA 4.0[/url]"
+scroll_active = false
+
+[node name="Explosion Animation" type="AnimatedSprite2D" parent="Credits/Scrolling Content"]
+position = Vector2(146, 1808)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_rsfmq")
+autoplay = "default"
+
+[node name="Seperator4" type="Line2D" parent="Credits/Scrolling Content"]
+position = Vector2(7, 1698)
+points = PackedVector2Array(-321, 247, 233, 247)
+width = 2.0
+
+[node name="Golden UI" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = 1976.0
+offset_right = -183.0
+offset_bottom = 2048.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/golden-ui]Golden UI[/url]
+Author: [url=https://opengameart.org/users/buch]Buch[/url]
+License: [url=http://creativecommons.org/publicdomain/zero/1.0/]CC0[/url]"
+scroll_active = false
+
+[node name="Golden UI 1" type="Sprite2D" parent="Credits/Scrolling Content"]
+position = Vector2(-171, 2399)
+scale = Vector2(4, 4)
+texture = ExtResource("1_yqeox")
+
+[node name="Golden UI 2" type="Sprite2D" parent="Credits/Scrolling Content"]
+position = Vector2(99, 2371)
+scale = Vector2(4, 4)
+texture = ExtResource("3_mhnvy")
+
+[node name="Seperator5" type="Line2D" parent="Credits/Scrolling Content"]
+position = Vector2(7, 2323)
+points = PackedVector2Array(-321, 247, 233, 247)
+width = 2.0
+
+[node name="Music and Effects Title" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = 2587.0
+offset_right = -185.0
+offset_bottom = 2705.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "Music & Effects:"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Explosions Sound Effect" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = 2683.0
+offset_right = -183.0
+offset_bottom = 2755.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/explosion-0]Explosion[/url]
+Author: [url=https://opengameart.org/users/tinyworlds]TinyWorlds[/url]
+License: [url=http://creativecommons.org/publicdomain/zero/1.0/]CC0[/url]"
+scroll_active = false
+
+[node name="Seperator6" type="Line2D" parent="Credits/Scrolling Content"]
+position = Vector2(7, 2748)
+points = PackedVector2Array(-321, 247, 233, 247)
+width = 2.0
+
+[node name="The Adventure Begins 8-bit Remix" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = 3014.0
+offset_right = -183.0
+offset_bottom = 3113.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/the-adventure-begins-8-bit-remix]The Adventure Begins 8-bit Remix[/url]
+Author: [url=https://opengameart.org/users/bart]bart[/url]
+License: [url=http://creativecommons.org/licenses/by/3.0/]CC-BY 3.0[/url]"
+scroll_active = false
+
 [connection signal="gui_input" from="PlayLabel" to="Pointer" method="_on_gui_input"]
 [connection signal="mouse_entered" from="PlayLabel" to="Pointer" method="_on_play_label_mouse_entered"]
 [connection signal="gui_input" from="OptionsLabel" to="Pointer" method="_on_gui_input"]
@@ -299,3 +760,21 @@ scroll_active = false
 [connection signal="mouse_entered" from="ScoresLabel" to="Pointer" method="_on_scores_label_mouse_entered"]
 [connection signal="gui_input" from="CreditsLabel" to="Pointer" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CreditsLabel" to="Pointer" method="_on_credits_label_mouse_entered"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Sprites Title2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Zelda like character2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Grass Tiles Basic2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/16x16 RPG Icons2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Explosion Effect2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Golden UI2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Music and Effects Title2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Explosions Sound Effect2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/The Adventure Begins 8-bit Remix2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Sprites Title" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Zelda like character" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Grass Tiles Basic" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/16x16 RPG Icons" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Explosion Effect" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Golden UI" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Music and Effects Title" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Explosions Sound Effect" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/The Adventure Begins 8-bit Remix" to="." method="_meta_clicked"]

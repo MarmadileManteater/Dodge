@@ -558,7 +558,7 @@ offset_bottom = 81.0
 scale = Vector2(4, 4)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
-text = "[b]Dodge! (the projectiles)[/b]"
+text = "[b]Dodge![/b]"
 scroll_active = false
 
 [node name="ScoreLabel" type="RichTextLabel" parent="."]
@@ -569,7 +569,7 @@ offset_right = 317.0
 offset_bottom = 74.0
 scale = Vector2(4, 4)
 bbcode_enabled = true
-text = "[b]Dodge! (the projectiles)[/b]"
+text = "[b]Dodge![/b]"
 scroll_active = false
 
 [node name="Score Backdrop" type="RichTextLabel" parent="."]

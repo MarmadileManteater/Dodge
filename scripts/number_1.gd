@@ -84,6 +84,10 @@ func _input(event: InputEvent) -> void:
 				if (menu.pointer.cursor_position == Pointer.MenuItem.SCORES):
 					menu.set_scores_text(get_scores_text())
 					menu.toggle_high_scores()
+				if (menu.pointer.cursor_position == Pointer.MenuItem.CREDITS):
+					menu.pointer.submenu = "credits"
+					menu.credits.start()
+					menu.pointer.visible = false
 		elif (menu.pointer.submenu == "options"):	
 			if (event.is_action_pressed("ui_accept")):
 				menu.pointer.submenu = null
@@ -98,6 +102,12 @@ func _input(event: InputEvent) -> void:
 				menu.pointer.submenu = null
 				menu.toggle_high_scores()
 				menu.pointer.set_cursor_position(Pointer.MenuItem.SCORES)
+		elif (menu.pointer.submenu == "credits"):
+			if (event.is_action_pressed("ui_accept")):
+				menu.credits.stop()
+				menu.pointer.submenu = null
+				menu.pointer.visible = true
+				menu.pointer.set_cursor_position(Pointer.MenuItem.CREDITS)
 	if (event.is_action_pressed("ui_up")):
 		menu.pointer.set_cursor_position_relatively(-1)
 	if (event.is_action_pressed("ui_down")):

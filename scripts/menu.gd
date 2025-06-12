@@ -1,5 +1,6 @@
 extends Node2D
 const Pointer = preload("res://scripts/pointer.gd")
+const Credits = preload("res://scripts/credits.gd")
 
 @export var pointer: Pointer
 var play_label: RichTextLabel
@@ -10,6 +11,7 @@ var effect_slider: Sprite2D
 var high_scores: Node2D
 var scores_label: RichTextLabel
 var scores_label_backdrop: RichTextLabel
+var credits: Credits
 
 func _enter_tree() -> void:
 	pointer = find_child("Pointer")
@@ -21,7 +23,8 @@ func _enter_tree() -> void:
 	high_scores = find_child("High Scores")
 	scores_label = high_scores.find_child("Scores Label")
 	scores_label_backdrop = high_scores.find_child("Scores Label Backdrop")
-
+	credits = find_child("Credits")
+	
 func toggle_audio_settings():
 	audio_settings.visible = !audio_settings.visible
 	if (audio_settings.visible):
@@ -54,3 +57,5 @@ func set_bgm_volume_slider(relative_position):
 func set_sfx_volume_slider(relative_position):
 	effect_slider.position[0] += relative_position
 	
+func _meta_clicked(meta: Variant) -> void:
+	OS.shell_open(meta)
