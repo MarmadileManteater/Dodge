@@ -114,8 +114,16 @@ func _input(event: InputEvent) -> void:
 				menu.pointer.visible = true
 				menu.pointer.set_cursor_position(Pointer.MenuItem.CREDITS)
 	if (event.is_action_pressed("ui_up")):
+		# higher deadzone for menu actions 
+		if (event is InputEventJoypadMotion):
+			if (event.axis_value > -1):
+				return
 		menu.pointer.set_cursor_position_relatively(-1)
 	if (event.is_action_pressed("ui_down")):
+		# higher deadzone for menu actions 
+		if (event is InputEventJoypadMotion):
+			if (event.axis_value < 1):
+				return
 		menu.pointer.set_cursor_position_relatively(1)
 
 func reset():

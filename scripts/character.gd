@@ -24,17 +24,19 @@ func _input(event: InputEvent) -> void:
 		for direction in Direction.english_directions:
 			if (event.is_action_pressed("ui_%s" % direction)):
 				animated_sprite.animation = "walk_%s" % direction
-				directions_pressed.append(
-					Direction.to_enum(direction)
-				)
+				var enum_direction = Direction.to_enum(direction)
+				if directions_pressed.find(enum_direction) == -1:
+					directions_pressed.append(
+						enum_direction
+					)
 			if (event.is_action_released("ui_%s" % direction)):
 				animated_sprite.animation = "idle_%s" % direction
+				var enum_direction = Direction.to_enum(direction)
 				directions_pressed.remove_at(
 					directions_pressed.find(
 						Direction.to_enum(direction)
 					)
 				)
-
 func _physics_process(delta: float) -> void:
 	if (alive && animated_sprite.animation == "explosion"):
 		animated_sprite.animation = "idle_down"
