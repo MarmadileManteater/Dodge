@@ -252,5 +252,4 @@ func _on_menu_tree_entered() -> void:
 
 
 func _on_menu_volume_change(volume) -> void:
-	print(int(volume))
 	set_volume_relatively(volume / 8)
