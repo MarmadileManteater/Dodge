@@ -1,38 +1,37 @@
 extends Node2D
+#region Imports
 const Pointer = preload("res://scripts/pointer.gd")
 const Credits = preload("res://scripts/credits.gd")
-
+#endregion
+#region Exported Signals
 signal volume_change
-
+#endregion
+#region State
+var effect_slider_clicked = false
+var effect_slider_start_pos = null
+var music_slider_clicked = false
+var music_slider_start_pos = null
+#endregion
+#region Custom Classes
 @export var pointer: Pointer
+var credits: Credits
+#endregion
+#region Labels
 var play_label: RichTextLabel
 var play_label_backdrop: RichTextLabel
 var options_label: RichTextLabel
 var scores_label: RichTextLabel
 var credits_label: RichTextLabel
-var audio_settings: TileMapLayer
-var music_slider: Sprite2D
-var effect_slider: Sprite2D
 var high_scores: Node2D
 var dynamic_scores_label: RichTextLabel
 var scores_label_backdrop: RichTextLabel
-var credits: Credits
-
-func _enter_tree() -> void:
-	pointer = find_child("Pointer")
-	play_label = find_child("PlayLabel")
-	play_label_backdrop = find_child("PlayLabel Back")
-	options_label = find_child("OptionsLabel")
-	scores_label = find_child("ScoresLabel")
-	credits_label = find_child("CreditsLabel")
-	audio_settings = find_child("Audio Settings")
-	music_slider = audio_settings.find_child("Music Slider")
-	effect_slider = audio_settings.find_child("Effect Slider")
-	high_scores = find_child("High Scores")
-	dynamic_scores_label = high_scores.find_child("Scores Label")
-	scores_label_backdrop = high_scores.find_child("Scores Label Backdrop")
-	credits = find_child("Credits")
-	
+#endregion
+#region Audio
+var audio_settings: TileMapLayer
+var music_slider: Sprite2D
+var effect_slider: Sprite2D
+#endregion
+#region Methods
 func set_default_cursor_shape(shape: Control.CursorShape):
 	play_label.mouse_default_cursor_shape = shape
 	options_label.mouse_default_cursor_shape = shape
@@ -53,10 +52,6 @@ func toggle_high_scores():
 	else:
 		pointer.visible = true
 
-func _on_gui_input(event: InputEvent) -> void:
-	if (event is InputEventMouseButton):
-		Input.action_press("ui_accept")
-
 func set_first_option_text(text = "Play"):
 	play_label.text = text
 	play_label_backdrop.text = text
@@ -76,12 +71,14 @@ func set_sfx_volume_slider(relative_position):
 	if (effect_slider.position[0] <= 69.5 || effect_slider.position[0] >= 121.5):
 		effect_slider_clicked = false
 		effect_slider_start_pos = null
+#endregion
+#region Signals
+func _on_gui_input(event: InputEvent) -> void:
+	if (event is InputEventMouseButton):
+		Input.action_press("ui_accept")
 	
 func _meta_clicked(meta: Variant) -> void:
 	OS.shell_open(meta)
-
-var effect_slider_clicked = false
-var effect_slider_start_pos = null
 
 func _on_click_listener_effect_slider(event: InputEvent) -> void:
 	if (event is InputEventMouseButton):
@@ -92,9 +89,6 @@ func _on_click_listener_effect_slider(event: InputEvent) -> void:
 			var diff = effect_slider_start_pos[0] - event.global_position[0]
 			volume_change.emit(-diff)
 			effect_slider_start_pos = event.global_position
-		
-var music_slider_clicked = false
-var music_slider_start_pos = null
 
 func _on_click_listener_music_slider(event: InputEvent) -> void:
 	if (event is InputEventMouseButton):
@@ -105,3 +99,18 @@ func _on_click_listener_music_slider(event: InputEvent) -> void:
 			var diff = music_slider_start_pos[0] - event.global_position[0]
 			volume_change.emit(-diff)
 			music_slider_start_pos = event.global_position
+#endregion
+func _enter_tree() -> void:
+	pointer = find_child("Pointer")
+	play_label = find_child("PlayLabel")
+	play_label_backdrop = find_child("PlayLabel Back")
+	options_label = find_child("OptionsLabel")
+	scores_label = find_child("ScoresLabel")
+	credits_label = find_child("CreditsLabel")
+	audio_settings = find_child("Audio Settings")
+	music_slider = audio_settings.find_child("Music Slider")
+	effect_slider = audio_settings.find_child("Effect Slider")
+	high_scores = find_child("High Scores")
+	dynamic_scores_label = high_scores.find_child("Scores Label")
+	scores_label_backdrop = high_scores.find_child("Scores Label Backdrop")
+	credits = find_child("Credits")

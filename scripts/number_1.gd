@@ -1,16 +1,10 @@
 extends Node2D
+#region Imports
 const Player = preload("res://scripts/character.gd")
 const Menu = preload("res://scripts/menu.gd")
 const Pointer = preload("res://scripts/pointer.gd")
-
-var player: Player
-var outline: Line2D
-var projectile_area: Node2D
-var projectiles: Array
-var projectile_timer: Timer
-var progression_timer: Timer
-var counter = 0
-var progression = 0
+#endregion
+#region Labels
 var score: RichTextLabel
 var score_backdrop: RichTextLabel
 var score_label: RichTextLabel
@@ -18,15 +12,66 @@ var score_label_backdrop: RichTextLabel
 var demo_label: RichTextLabel
 var demo_label_backdrop: RichTextLabel
 var demo_label_container: Node2D
-var background_music: AudioStreamPlayer2D
+#endregion
+#region Custom Classes
+var player: Player
 var menu: Menu
+#endregion
+#region Game State
+var outline: Line2D
+var projectile_area: Node2D
+var projectiles: Array
+var projectile_timer: Timer
+var progression_timer: Timer
+var counter = 0
+var progression = 0
+#endregion
+#region Sound
+var background_music: AudioStreamPlayer2D
 var volume_range = 13
 var bgm_volume = 0
 var sfx_volume = 0
 var high_scores = [3,3,3]
 var new_high_score: Node2D
 var bgm_muted = false
+#endregion
+#region Signals
+func _on_projectile_timer_timeout() -> void:
+	var projectile: RigidBody2D = projectiles[randi() % len(projectiles)]
+	spawn_projectile(projectile)
+	
+func _on_progression_timer_timeout() -> void:
+	if (player.alive and player.mode == "game"):
+		progression+=1
+		score.text = "%d" % progression
+		score_backdrop.text = "%d" % progression
+		projectile_timer.wait_time = 1.0 / (progression + 1
+		)
 
+func _on_demo_timer_timeout() -> void:
+	demo_label.visible = !demo_label.visible
+	demo_label_backdrop.visible = !demo_label_backdrop.visible
+
+func _on_death_timer_timeout() -> void:
+	if (player.mode == "demo"):
+		reset()
+	else:
+		if add_score(progression) > 0:
+			new_high_score.visible = true
+		save_game()
+		menu.set_first_option_text("Restart")
+		menu.visible = true
+		menu.pointer.set_cursor_position(0)
+
+func _on_menu_tree_entered() -> void:
+	load_game()
+	if (!bgm_muted):
+		background_music.play()
+
+func _on_menu_volume_change(volume) -> void:
+	set_volume_relatively(volume / 8)
+#endregion
+#region Methods
 func generate_coord_around_viewport():
 	return outline.get_point_position(randi() % outline.get_point_count())
 
@@ -42,89 +87,6 @@ func spawn_projectile(projectile: RigidBody2D):
 	] 
 	counter+=1
 	projectile_area.add_child(new_projectile)
-
-func _on_projectile_timer_timeout() -> void:
-	var projectile: RigidBody2D = projectiles[randi() % len(projectiles)]
-	spawn_projectile(projectile)
-	
-func _on_progression_timer_timeout() -> void:
-	if (player.alive and player.mode == "game"):
-		progression+=1
-		score.text = "%d" % progression
-		score_backdrop.text = "%d" % progression
-		projectile_timer.wait_time = 1.0 / (progression + 1
-		)
-	
-func _enter_tree() -> void:
-	player = find_child("Player")
-	outline = find_child("Outline")
-	score_label = find_child("ScoreLabel")
-	score_label_backdrop = find_child("ScoreLabel Backdrop")
-	score = find_child("Score")
-	score_backdrop = find_child("Score Backdrop")
-	demo_label = find_child("Demo")
-	demo_label_backdrop = find_child("Demo Backdrop")
-	demo_label_container = find_child("DemoLabel Container")
-	new_high_score = find_child("New High Score")
-	
-	background_music = find_child("Background Music")
-	
-	menu = find_child("Menu")
-	
-	projectiles = find_children("*-Projectile")
-	projectile_area = find_child("Projectiles")
-	projectile_timer = find_child("ProjectileTimer")
-	progression_timer = find_child("ProgressionTimer")
-
-func _input(event: InputEvent) -> void:
-	if (menu.visible):
-		if (menu.pointer.submenu == null):
-			if (event.is_action_pressed("ui_accept")):
-				if (menu.pointer.cursor_position == Pointer.MenuItem.PLAY):
-					play()
-					menu.visible = false
-				if (menu.pointer.cursor_position == Pointer.MenuItem.OPTIONS):
-					menu.toggle_audio_settings()
-				if (menu.pointer.cursor_position == Pointer.MenuItem.SCORES):
-					menu.set_scores_text(get_scores_text())
-					menu.toggle_high_scores()
-				if (menu.pointer.cursor_position == Pointer.MenuItem.CREDITS):
-					menu.pointer.submenu = "credits"
-					menu.credits.start()
-					menu.pointer.visible = false
-		elif (menu.pointer.submenu == "options"):	
-			if (event.is_action_pressed("ui_accept")):
-				save_game()
-				menu.pointer.submenu = null
-				menu.toggle_audio_settings()
-				menu.pointer.set_cursor_position(Pointer.MenuItem.OPTIONS)
-			if (event.is_action_pressed("ui_left", true)):
-				set_volume_relatively(-1)
-			if (event.is_action_pressed("ui_right", true)):
-				set_volume_relatively(1)
-		elif (menu.pointer.submenu == "high_scores"):
-			if (event.is_action_pressed("ui_accept")):
-				menu.pointer.submenu = null
-				menu.toggle_high_scores()
-				menu.pointer.set_cursor_position(Pointer.MenuItem.SCORES)
-		elif (menu.pointer.submenu == "credits"):
-			if (event.is_action_pressed("ui_accept")):
-				menu.credits.stop()
-				menu.pointer.submenu = null
-				menu.pointer.visible = true
-				menu.pointer.set_cursor_position(Pointer.MenuItem.CREDITS)
-	if (event.is_action_pressed("ui_up")):
-		# higher deadzone for menu actions 
-		if (event is InputEventJoypadMotion):
-			if (event.axis_value > -1):
-				return
-		menu.pointer.set_cursor_position_relatively(-1)
-	if (event.is_action_pressed("ui_down")):
-		# higher deadzone for menu actions 
-		if (event is InputEventJoypadMotion):
-			if (event.axis_value < 1):
-				return
-		menu.pointer.set_cursor_position_relatively(1)
 
 func reset():
 	# remove all projectiles
@@ -150,25 +112,10 @@ func play():
 	score_backdrop.text = "%d" % progression
 	player.play()
 	# stream paused is used to determine if the mute is on
-	if (!bgm_muted):
+	if (!bgm_muted && player.mode == "demo"):
 		background_music.stop()
 		background_music.play()
 
-func _on_demo_timer_timeout() -> void:
-	demo_label.visible = !demo_label.visible
-	demo_label_backdrop.visible = !demo_label_backdrop.visible
-
-func _on_death_timer_timeout() -> void:
-	if (player.mode == "demo"):
-		reset()
-	else:
-		if add_score(progression) > 0:
-			new_high_score.visible = true
-		save_game()
-		menu.set_first_option_text("Restart")
-		menu.visible = true
-		menu.pointer.set_cursor_position(0)
-		
 func set_volume_relatively(volume, position = menu.pointer.cursor_position):
 	if (position == 0):
 		if ((bgm_volume + volume > volume_range) 
@@ -243,13 +190,75 @@ func load_game():
 		
 	set_volume_relatively(save_dict.data["bgm_volume"], 0)
 	set_volume_relatively(save_dict.data["sfx_volume"], 1)
+#endregion
 
+func _enter_tree() -> void:
+	player = find_child("Player")
+	outline = find_child("Outline")
+	score_label = find_child("ScoreLabel")
+	score_label_backdrop = find_child("ScoreLabel Backdrop")
+	score = find_child("Score")
+	score_backdrop = find_child("Score Backdrop")
+	demo_label = find_child("Demo")
+	demo_label_backdrop = find_child("Demo Backdrop")
+	demo_label_container = find_child("DemoLabel Container")
+	new_high_score = find_child("New High Score")
+	
+	background_music = find_child("Background Music")
+	
+	menu = find_child("Menu")
+	
+	projectiles = find_children("*-Projectile")
+	projectile_area = find_child("Projectiles")
+	projectile_timer = find_child("ProjectileTimer")
+	progression_timer = find_child("ProgressionTimer")
 
-func _on_menu_tree_entered() -> void:
-	load_game()
-	if (!bgm_muted):
-		background_music.play()
-
-
-func _on_menu_volume_change(volume) -> void:
-	set_volume_relatively(volume / 8)
+func _input(event: InputEvent) -> void:
+	if (menu.visible):
+		if (menu.pointer.submenu == null):
+			if (event.is_action_pressed("ui_accept")):
+				if (menu.pointer.cursor_position == Pointer.MenuItem.PLAY):
+					play()
+					menu.visible = false
+				if (menu.pointer.cursor_position == Pointer.MenuItem.OPTIONS):
+					menu.toggle_audio_settings()
+				if (menu.pointer.cursor_position == Pointer.MenuItem.SCORES):
+					menu.set_scores_text(get_scores_text())
+					menu.toggle_high_scores()
+				if (menu.pointer.cursor_position == Pointer.MenuItem.CREDITS):
+					menu.pointer.submenu = "credits"
+					menu.credits.start()
+					menu.pointer.visible = false
+		elif (menu.pointer.submenu == "options"):	
+			if (event.is_action_pressed("ui_accept")):
+				save_game()
+				menu.pointer.submenu = null
+				menu.toggle_audio_settings()
+				menu.pointer.set_cursor_position(Pointer.MenuItem.OPTIONS)
+			if (event.is_action_pressed("ui_left", true)):
+				set_volume_relatively(-1)
+			if (event.is_action_pressed("ui_right", true)):
+				set_volume_relatively(1)
+		elif (menu.pointer.submenu == "high_scores"):
+			if (event.is_action_pressed("ui_accept")):
+				menu.pointer.submenu = null
+				menu.toggle_high_scores()
+				menu.pointer.set_cursor_position(Pointer.MenuItem.SCORES)
+		elif (menu.pointer.submenu == "credits"):
+			if (event.is_action_pressed("ui_accept")):
+				menu.credits.stop()
+				menu.pointer.submenu = null
+				menu.pointer.visible = true
+				menu.pointer.set_cursor_position(Pointer.MenuItem.CREDITS)
+	if (event.is_action_pressed("ui_up")):
+		# higher deadzone for menu actions 
+		if (event is InputEventJoypadMotion):
+			if (event.axis_value > -1):
+				return
+		menu.pointer.set_cursor_position_relatively(-1)
+	if (event.is_action_pressed("ui_down")):
+		# higher deadzone for menu actions 
+		if (event is InputEventJoypadMotion):
+			if (event.axis_value < 1):
+				return
+		menu.pointer.set_cursor_position_relatively(1)

@@ -1,21 +1,20 @@
 extends AnimatedSprite2D
-
+#region State
 var original_position: Vector2
 @export var cursor_position = 0
 @export var min_position = 0
 @export var max_position = 4
 @export var submenu = null
-
+#endregion
+#region Enums
 enum MenuItem {
 	PLAY,
 	OPTIONS,
 	SCORES,
 	CREDITS
 }
-
-func _enter_tree() -> void:
-	original_position = position
-
+#endregion
+#region Methods
 func set_cursor_position(given_position):
 	var min = min_position
 	var max = max_position
@@ -33,7 +32,8 @@ func set_cursor_position(given_position):
 
 func set_cursor_position_relatively(given_position):
 	set_cursor_position(cursor_position + given_position)
-
+#endregion
+#region Signals
 func _on_play_label_mouse_entered() -> void:
 	if (submenu == null):
 		set_cursor_position(MenuItem.PLAY)
@@ -63,4 +63,8 @@ func _on_effect_hover_mouse_entered() -> void:
 
 func _on_music_hover_mouse_entered() -> void:
 	set_cursor_position(0)
+#endregion
+
+func _enter_tree() -> void:
+	original_position = position
 	
