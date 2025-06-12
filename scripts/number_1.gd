@@ -25,6 +25,7 @@ var bgm_volume = 0
 var sfx_volume = 0
 var high_scores = [3,3,3]
 var new_high_score: Node2D
+var bgm_muted = false
 
 func generate_coord_around_viewport():
 	return outline.get_point_position(randi() % outline.get_point_count())
@@ -92,6 +93,7 @@ func _input(event: InputEvent) -> void:
 					menu.pointer.visible = false
 		elif (menu.pointer.submenu == "options"):	
 			if (event.is_action_pressed("ui_accept")):
+				save_game()
 				menu.pointer.submenu = null
 				menu.toggle_audio_settings()
 				menu.pointer.set_cursor_position(Pointer.MenuItem.OPTIONS)
@@ -128,7 +130,7 @@ func play():
 	progression_timer.stop()
 	progression_timer.start()
 	new_high_score.visible = false
-	if (player.mode == "demo" and !background_music.stream_paused):
+	if (player.mode == "demo" and !bgm_muted):
 		background_music.play()
 	demo_label_container.visible = false
 	reset()
@@ -138,7 +140,7 @@ func play():
 	score_backdrop.text = "%d" % progression
 	player.play()
 	# stream paused is used to determine if the mute is on
-	if (!background_music.stream_paused):
+	if (!bgm_muted):
 		background_music.stop()
 		background_music.play()
 
@@ -152,28 +154,32 @@ func _on_death_timer_timeout() -> void:
 	else:
 		if add_score(progression) > 0:
 			new_high_score.visible = true
+		save_game()
 		menu.set_first_option_text("Restart")
 		menu.visible = true
 		menu.pointer.set_cursor_position(0)
 		
-func set_volume_relatively(volume):
-	if (menu.pointer.submenu == "options"):
-		if (menu.pointer.cursor_position == 0):
-			if ((bgm_volume == volume_range and volume > 0) 
-			or (bgm_volume == -volume_range and volume < 0)):
-				volume = 0
-			bgm_volume += volume
-			background_music.stream_paused = bgm_volume == -volume_range
-			background_music.volume_db += volume
-			menu.set_bgm_volume_slider(volume * 2)
-		if (menu.pointer.cursor_position == 1):
-			if ((sfx_volume == volume_range and volume > 0) 
-			or (sfx_volume == -volume_range and volume < 0)):
-				volume = 0
-			sfx_volume += volume
-			player.mute_explosion = sfx_volume == -volume_range
-			player.explosion_sound_effect.volume_db += volume
-			menu.set_sfx_volume_slider(volume * 2)
+func set_volume_relatively(volume, position = menu.pointer.cursor_position):
+	if (position == 0):
+		if ((bgm_volume == volume_range and volume > 0) 
+		or (bgm_volume == -volume_range and volume < 0)):
+			volume = 0
+		bgm_volume += volume
+		bgm_muted = bgm_volume == -volume_range
+		# won't set before music loads
+		background_music.stream_paused = bgm_muted
+		if (!background_music.playing && !bgm_muted):
+			background_music.play()
+		background_music.volume_db += volume
+		menu.set_bgm_volume_slider(volume * 2)
+	if (position == 1):
+		if ((sfx_volume == volume_range and volume > 0) 
+		or (sfx_volume == -volume_range and volume < 0)):
+			volume = 0
+		sfx_volume += volume
+		player.mute_explosion = sfx_volume == -volume_range
+		player.explosion_sound_effect.volume_db += volume
+		menu.set_sfx_volume_slider(volume * 2)
 	
 func add_score(score):
 	for i in range(0, len(high_scores)):
@@ -193,3 +199,35 @@ func get_scores_text():
 	for i in range(0, len(high_scores)):
 		string += "%d. %d\n" % [ i + 1, high_scores[i] ]
 	return string
+
+func save_game():
+	var save_file = FileAccess.open("user://savegame.json", FileAccess.WRITE)
+	var save_dict = {
+		"high_scores": high_scores,
+		"bgm_volume": bgm_volume,
+		"sfx_volume": sfx_volume
+	}
+	save_file.store_string(JSON.stringify(save_dict, "  ", true))
+
+func load_game():
+	if not FileAccess.file_exists("user://savegame.json"):
+		return
+	
+	var save_string = FileAccess.get_file_as_string("user://savegame.json")
+	
+	var save_dict = JSON.new()
+	
+	if not save_dict.parse(save_string) == OK:
+		print("failed to load save data")
+		
+	for score in save_dict.data["high_scores"]:
+		add_score(score)
+		
+	set_volume_relatively(save_dict.data["bgm_volume"], 0)
+	set_volume_relatively(save_dict.data["sfx_volume"], 1)
+
+
+func _on_menu_tree_entered() -> void:
+	load_game()
+	if (!bgm_muted):
+		background_music.play()

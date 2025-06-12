@@ -310,7 +310,7 @@ position = Vector2(-131, -87)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_con2f")
 autoplay = "default"
-frame_progress = 0.376877
+frame_progress = 0.00184914
 script = ExtResource("3_con2f")
 
 [node name="Audio Settings" type="TileMapLayer" parent="."]

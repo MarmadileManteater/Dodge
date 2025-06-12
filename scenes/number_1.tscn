@@ -651,7 +651,6 @@ shape = SubResource("SegmentShape2D_8xorg")
 position = Vector2(568, 331)
 stream = ExtResource("8_ubbun")
 volume_db = -20.0
-autoplay = true
 
 [node name="Menu" parent="." instance=ExtResource("10_gj6lo")]
 position = Vector2(233, 339)
@@ -697,4 +696,5 @@ autostart = true
 [connection signal="timeout" from="ProjectileTimer" to="." method="_on_projectile_timer_timeout"]
 [connection signal="timeout" from="ProgressionTimer" to="." method="_on_progression_timer_timeout"]
 [connection signal="timeout" from="DemoLabel Container/DemoTimer" to="." method="_on_demo_timer_timeout"]
+[connection signal="tree_entered" from="Menu" to="." method="_on_menu_tree_entered"]
 [connection signal="timeout" from="New High Score/FlickerTimer" to="New High Score/FlickerBox" method="_on_flicker_timer_timeout"]
