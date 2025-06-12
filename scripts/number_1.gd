@@ -1,6 +1,8 @@
 extends Node2D
 const Player = preload("res://scripts/character.gd")
 const Menu = preload("res://scripts/menu.gd")
+const Pointer = preload("res://scripts/pointer.gd")
+
 var player: Player
 var outline: Line2D
 var projectile_area: Node2D
@@ -17,6 +19,9 @@ var demo_label_backdrop: RichTextLabel
 var demo_label_container: Node2D
 var background_music: AudioStreamPlayer2D
 var menu: Menu
+var volume_range = 13
+var bgm_volume = 0
+var sfx_volume = 0
 
 func generate_coord_around_viewport():
 	return outline.get_point_position(randi() % outline.get_point_count())
@@ -65,13 +70,23 @@ func _enter_tree() -> void:
 	projectile_timer = find_child("ProjectileTimer")
 
 func _input(event: InputEvent) -> void:
-	if (event.is_action_pressed("ui_accept")):
-		if (menu.visible):
-			if (menu.pointer.cursor_position == 0):
-				play()
-				menu.visible = false
-		else:
-			menu.visible = true
+	if (menu.visible):
+		if (menu.pointer.submenu == null):
+			if (event.is_action_pressed("ui_accept")):
+				if (menu.pointer.cursor_position == Pointer.MenuItem.PLAY):
+					play()
+					menu.visible = false
+				if (menu.pointer.cursor_position == Pointer.MenuItem.OPTIONS):
+					menu.toggle_audio_settings()
+		elif (menu.pointer.submenu == "options"):	
+			if (event.is_action_pressed("ui_accept")):
+				menu.pointer.submenu = null
+				menu.toggle_audio_settings()
+				menu.pointer.set_cursor_position(Pointer.MenuItem.OPTIONS)
+			if (event.is_action_pressed("ui_left", true)):
+				set_volume_relatively(-1)
+			if (event.is_action_pressed("ui_right", true)):
+				set_volume_relatively(1)
 	if (event.is_action_pressed("ui_up")):
 		menu.pointer.set_cursor_position_relatively(-1)
 	if (event.is_action_pressed("ui_down")):
@@ -86,7 +101,7 @@ func reset():
 	player.reset()
 	
 func play():
-	if (player.mode == "demo"):
+	if (player.mode == "demo" and !background_music.stream_paused):
 		background_music.play()
 	demo_label_container.visible = false
 	reset()
@@ -95,12 +110,39 @@ func play():
 	score.text = "%d" % progression
 	score_backdrop.text = "%d" % progression
 	player.play()
-	background_music.stop()
-	background_music.play()
+	# stream paused is used to determine if the mute is on
+	if (!background_music.stream_paused):
+		background_music.stop()
+		background_music.play()
 
 func _on_demo_timer_timeout() -> void:
 	demo_label.visible = !demo_label.visible
 	demo_label_backdrop.visible = !demo_label_backdrop.visible
 
 func _on_death_timer_timeout() -> void:
-	reset()
+	if (player.mode == "demo"):
+		reset()
+	else:
+		menu.set_first_option_text("Restart")
+		menu.visible = true
+		menu.pointer.set_cursor_position(0)
+		
+func set_volume_relatively(volume):
+	if (menu.pointer.submenu == "options"):
+		if (menu.pointer.cursor_position == 0):
+			if ((bgm_volume == volume_range and volume > 0) 
+			or (bgm_volume == -volume_range and volume < 0)):
+				volume = 0
+			bgm_volume += volume
+			background_music.stream_paused = bgm_volume == -volume_range
+			background_music.volume_db += volume
+			menu.set_bgm_volume_slider(volume * 2)
+		if (menu.pointer.cursor_position == 1):
+			if ((sfx_volume == volume_range and volume > 0) 
+			or (sfx_volume == -volume_range and volume < 0)):
+				volume = 0
+			sfx_volume += volume
+			player.mute_explosion = sfx_volume == -volume_range
+			player.explosion_sound_effect.volume_db += volume
+			menu.set_sfx_volume_slider(volume * 2)
+	

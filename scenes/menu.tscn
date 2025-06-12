@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://p1fa37oi3mua"]
+[gd_scene load_steps=13 format=4 uid="uid://p1fa37oi3mua"]
 
 [ext_resource type="Script" uid="uid://ctt22yxhgsb7c" path="res://scripts/menu.gd" id="1_vjb58"]
 [ext_resource type="Texture2D" uid="uid://bkrqnncsgvwdt" path="res://assets/spritesheets/Golden UI tileset.png" id="1_yqeox"]
 [ext_resource type="Script" uid="uid://bj8m0fu718upq" path="res://scripts/pointer.gd" id="3_con2f"]
+[ext_resource type="Texture2D" uid="uid://bainw1icohgyn" path="res://assets/spritesheets/Golden UI scales.png" id="3_mhnvy"]
+[ext_resource type="Texture2D" uid="uid://duexdknmvq4bg" path="res://assets/spritesheets/golden-ui-bar.png" id="5_4ytvr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vjb58"]
 texture = ExtResource("1_yqeox")
@@ -46,6 +48,23 @@ animations = [{
 "name": &"default",
 "speed": 2.5
 }]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4ytvr"]
+texture = ExtResource("3_mhnvy")
+texture_region_size = Vector2i(12, 16)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+2:2/0 = 0
+1:2/0 = 0
+0:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_g3eks"]
+tile_size = Vector2i(12, 16)
+sources/0 = SubResource("TileSetAtlasSource_4ytvr")
 
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_vjb58")
@@ -150,8 +169,81 @@ position = Vector2(-131, -87)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_con2f")
 autoplay = "default"
-frame_progress = 0.665716
+frame_progress = 0.355438
 script = ExtResource("3_con2f")
+
+[node name="Audio Settings" type="TileMapLayer" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(11, 105)
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAAFAP7/AAAAAAAAAAAGAP7/AAABAAAAAAAHAP7/AAABAAAAAAAIAP7/AAABAAAAAAAJAP7/AAABAAAAAAAKAP7/AAACAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAAIAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAAAAAACAAAAAAA=")
+tile_set = SubResource("TileSet_g3eks")
+
+[node name="Effect Slider" type="Sprite2D" parent="Audio Settings"]
+position = Vector2(95.5, 8)
+scale = Vector2(1, 1.25)
+texture = ExtResource("5_4ytvr")
+
+[node name="Music Slider" type="Sprite2D" parent="Audio Settings"]
+position = Vector2(95.5, -24)
+scale = Vector2(1, 1.25)
+texture = ExtResource("5_4ytvr")
+
+[node name="Music Label Back" type="RichTextLabel" parent="Audio Settings"]
+offset_left = 134.5
+offset_top = -32.5
+offset_right = 170.5
+offset_bottom = -16.5
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 12
+text = "Music"
+scroll_active = false
+
+[node name="Music Label" type="RichTextLabel" parent="Audio Settings"]
+offset_left = 134.25
+offset_top = -32.75
+offset_right = 170.25
+offset_bottom = -16.75
+theme_override_font_sizes/normal_font_size = 12
+text = "Music"
+scroll_active = false
+
+[node name="Effect Label Back" type="RichTextLabel" parent="Audio Settings"]
+offset_left = 135.0
+offset_top = -0.5
+offset_right = 175.0
+offset_bottom = 15.5
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 12
+text = "Effects"
+scroll_active = false
+
+[node name="Effect Label" type="RichTextLabel" parent="Audio Settings"]
+offset_left = 134.0
+offset_top = -1.5
+offset_right = 174.0
+offset_bottom = 14.5
+theme_override_font_sizes/normal_font_size = 12
+text = "Effects"
+scroll_active = false
+
+[node name="Volume Label Back" type="RichTextLabel" parent="Audio Settings"]
+offset_left = 85.5
+offset_top = -54.5
+offset_right = 146.5
+offset_bottom = -33.5
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Volume"
+scroll_active = false
+
+[node name="Volume Label" type="RichTextLabel" parent="Audio Settings"]
+offset_left = 85.0
+offset_top = -55.0
+offset_right = 146.0
+offset_bottom = -34.0
+text = "Volume"
+scroll_active = false
 
 [connection signal="gui_input" from="PlayLabel" to="Pointer" method="_on_gui_input"]
 [connection signal="mouse_entered" from="PlayLabel" to="Pointer" method="_on_play_label_mouse_entered"]

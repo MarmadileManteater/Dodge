@@ -10,7 +10,8 @@ var speed = 200
 var directions_pressed = []
 
 var animated_sprite: AnimatedSprite2D
-var explosion_sound_effect: AudioStreamPlayer2D
+@export var explosion_sound_effect: AudioStreamPlayer2D
+@export var mute_explosion = false
 var death_timer: Timer
 
 func _enter_tree() -> void:
@@ -47,11 +48,13 @@ func _physics_process(delta: float) -> void:
 		# prevent collisions after the first one
 		set_physics_process(false)
 		animated_sprite.animation = "explosion"
-		explosion_sound_effect.play()
+		if (!mute_explosion):
+			explosion_sound_effect.play()
 		alive = false
-		if (mode == "demo"):
-			# use a timer to restart when in demo mode
-			death_timer.start()
+		if (mode == "game"):
+			death_timer.wait_time = 1
+		# use a timer to restart or show the menu
+		death_timer.start()
 	rotation = 0
 	linear_velocity = Vector2(0, 0)
 	if (len(directions_pressed) > 0) && alive:

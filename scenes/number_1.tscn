@@ -490,9 +490,11 @@ autostart = true
 
 [node name="DeathTimer" type="Timer" parent="Player"]
 wait_time = 3.0
+one_shot = true
 
 [node name="Explosion" type="AudioStreamPlayer2D" parent="Player"]
 stream = ExtResource("6_hnlpu")
+volume_db = -20.0
 
 [node name="Bounding Box" type="StaticBody2D" parent="."]
 collision_layer = 4
@@ -647,6 +649,7 @@ shape = SubResource("SegmentShape2D_8xorg")
 [node name="Background Music" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(568, 331)
 stream = ExtResource("8_ubbun")
+volume_db = -20.0
 autoplay = true
 
 [node name="Menu" parent="." instance=ExtResource("10_gj6lo")]
