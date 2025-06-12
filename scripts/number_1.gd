@@ -1,6 +1,6 @@
 extends Node2D
 const Player = preload("res://scripts/character.gd")
-
+const Menu = preload("res://scripts/menu.gd")
 var player: Player
 var outline: Line2D
 var projectile_area: Node2D
@@ -15,6 +15,8 @@ var score_label_backdrop: RichTextLabel
 var demo_label: RichTextLabel
 var demo_label_backdrop: RichTextLabel
 var demo_label_container: Node2D
+var background_music: AudioStreamPlayer2D
+var menu: Menu
 
 func generate_coord_around_viewport():
 	return outline.get_point_position(randi() % outline.get_point_count())
@@ -54,13 +56,26 @@ func _enter_tree() -> void:
 	demo_label_backdrop = find_child("Demo Backdrop")
 	demo_label_container = find_child("DemoLabel Container")
 	
+	background_music = find_child("Background Music")
+	
+	menu = find_child("Menu")
+	
 	projectiles = find_children("*-Projectile")
 	projectile_area = find_child("Projectiles")
 	projectile_timer = find_child("ProjectileTimer")
 
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("ui_accept")):
-		play()
+		if (menu.visible):
+			if (menu.pointer.cursor_position == 0):
+				play()
+				menu.visible = false
+		else:
+			menu.visible = true
+	if (event.is_action_pressed("ui_up")):
+		menu.pointer.set_cursor_position_relatively(-1)
+	if (event.is_action_pressed("ui_down")):
+		menu.pointer.set_cursor_position_relatively(1)
 
 func reset():
 	# remove all projectiles
@@ -71,6 +86,8 @@ func reset():
 	player.reset()
 	
 func play():
+	if (player.mode == "demo"):
+		background_music.play()
 	demo_label_container.visible = false
 	reset()
 	score_label.text = "[b]Score:[/b]"
@@ -78,11 +95,12 @@ func play():
 	score.text = "%d" % progression
 	score_backdrop.text = "%d" % progression
 	player.play()
+	background_music.stop()
+	background_music.play()
 
 func _on_demo_timer_timeout() -> void:
 	demo_label.visible = !demo_label.visible
 	demo_label_backdrop.visible = !demo_label_backdrop.visible
-
 
 func _on_death_timer_timeout() -> void:
 	reset()

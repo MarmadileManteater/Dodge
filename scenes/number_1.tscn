@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=4 uid="uid://btxnb4hdoanqc"]
+[gd_scene load_steps=70 format=4 uid="uid://btxnb4hdoanqc"]
 
 [ext_resource type="Script" uid="uid://btmurkrw0wt34" path="res://scripts/number_1.gd" id="1_2ane3"]
 [ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="1_hqiah"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bqnbgso0b61h6" path="res://scripts/projectile.gd" id="5_sj2e1"]
 [ext_resource type="AudioStream" uid="uid://bo50lqguyq5b3" path="res://assets/sounds/explosion.ogg" id="6_hnlpu"]
 [ext_resource type="AudioStream" uid="uid://vpqmiowahasq" path="res://assets/music/The Adventure Begins 8-bit remix.ogg" id="8_ubbun"]
+[ext_resource type="PackedScene" uid="uid://p1fa37oi3mua" path="res://scenes/menu.tscn" id="10_gj6lo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ubbun"]
 resource_name = "Grass"
@@ -547,51 +548,47 @@ autostart = true
 
 [node name="ScoreLabel Backdrop" type="RichTextLabel" parent="."]
 texture_filter = 1
-offset_left = 194.0
+offset_left = 55.0
 offset_top = 54.0
-offset_right = 386.0
+offset_right = 318.0
 offset_bottom = 81.0
 scale = Vector2(4, 4)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 text = "[b]Dodge! (the projectiles)[/b]"
 scroll_active = false
-horizontal_alignment = 1
 
 [node name="ScoreLabel" type="RichTextLabel" parent="."]
 texture_filter = 1
-offset_left = 191.0
+offset_left = 48.0
 offset_top = 49.0
-offset_right = 383.0
+offset_right = 317.0
 offset_bottom = 74.0
 scale = Vector2(4, 4)
 bbcode_enabled = true
 text = "[b]Dodge! (the projectiles)[/b]"
 scroll_active = false
-horizontal_alignment = 1
 
 [node name="Score Backdrop" type="RichTextLabel" parent="."]
 texture_filter = 1
-offset_left = 193.0
-offset_top = 139.0
-offset_right = 385.0
-offset_bottom = 166.0
+offset_left = 289.0
+offset_top = 55.0
+offset_right = 481.0
+offset_bottom = 82.0
 scale = Vector2(4, 4)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 scroll_active = false
-horizontal_alignment = 1
 
 [node name="Score" type="RichTextLabel" parent="."]
 texture_filter = 1
-offset_left = 190.0
-offset_top = 134.0
-offset_right = 382.0
-offset_bottom = 159.0
+offset_left = 286.0
+offset_top = 50.0
+offset_right = 478.0
+offset_bottom = 75.0
 scale = Vector2(4, 4)
 bbcode_enabled = true
 scroll_active = false
-horizontal_alignment = 1
 
 [node name="DemoLabel Container" type="Node2D" parent="."]
 
@@ -647,10 +644,13 @@ shape = SubResource("SegmentShape2D_8xorg")
 position = Vector2(-861, -7)
 shape = SubResource("SegmentShape2D_8xorg")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="Background Music" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(568, 331)
 stream = ExtResource("8_ubbun")
 autoplay = true
+
+[node name="Menu" parent="." instance=ExtResource("10_gj6lo")]
+position = Vector2(233, 339)
 
 [connection signal="timeout" from="Player/DemoTimer" to="Player" method="_on_demo_timer_timeout"]
 [connection signal="timeout" from="Player/DeathTimer" to="." method="_on_death_timer_timeout"]

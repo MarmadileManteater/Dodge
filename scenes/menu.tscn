@@ -1,0 +1,93 @@
+[gd_scene load_steps=9 format=4 uid="uid://p1fa37oi3mua"]
+
+[ext_resource type="Script" uid="uid://ctt22yxhgsb7c" path="res://scripts/menu.gd" id="1_vjb58"]
+[ext_resource type="Texture2D" uid="uid://bkrqnncsgvwdt" path="res://assets/spritesheets/Golden UI tileset.png" id="1_yqeox"]
+[ext_resource type="Script" uid="uid://bj8m0fu718upq" path="res://scripts/pointer.gd" id="3_con2f"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vjb58"]
+texture = ExtResource("1_yqeox")
+0:0/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:1/0 = 0
+4:2/0 = 0
+3:2/0 = 0
+2:2/0 = 0
+1:2/0 = 0
+0:2/0 = 0
+0:1/0 = 0
+4:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_con2f"]
+sources/2 = SubResource("TileSetAtlasSource_vjb58")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqeox"]
+atlas = ExtResource("1_yqeox")
+region = Rect2(68, 52, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjb58"]
+atlas = ExtResource("1_yqeox")
+region = Rect2(56, 52, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_con2f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqeox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjb58")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.5
+}]
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_vjb58")
+
+[node name="Menu" type="TileMapLayer" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAD9/wIAAgAAAAEAAAD+/wMAAgABAAEAAAD9/wMAAgAAAAEAAAD//wMAAgABAAEAAAAAAAMAAgABAAEAAAABAAMAAgABAAEAAAACAAMAAgAEAAEAAAACAAEAAgAEAAEAAAACAAIAAgAEAAEAAAACAAAAAgAEAAEAAAACAP//AgAEAAEAAAACAP7/AgAEAAEAAAD9/wEAAgAAAAEAAAD9/wAAAgAAAAEAAAD9////AgAAAAEAAAD9//7/AgAAAAEAAAD9//3/AgAAAAAAAAD+//3/AgABAAAAAAD///3/AgABAAAAAAAAAP3/AgABAAAAAAABAP3/AgABAAAAAAACAP3/AgAEAAAAAAD+//7/AgABAAEAAAD+////AgABAAEAAAD+/wAAAgABAAEAAAD+/wEAAgABAAEAAAD+/wIAAgABAAEAAAD///7/AgABAAEAAAD/////AgABAAEAAAD//wAAAgABAAEAAAD//wEAAgABAAEAAAD//wIAAgABAAEAAAAAAP7/AgABAAEAAAAAAP//AgABAAEAAAAAAAAAAgABAAEAAAAAAAEAAgABAAEAAAAAAAIAAgABAAEAAAABAP7/AgABAAEAAAABAP//AgABAAEAAAABAAAAAgABAAEAAAABAAEAAgABAAEAAAABAAIAAgABAAEAAAD9/wQAAgAAAAIAAAACAAQAAgAEAAIAAAD+/wQAAgADAAIAAAD//wQAAgADAAIAAAAAAAQAAgADAAIAAAABAAQAAgADAAIAAAA=")
+tile_set = SubResource("TileSet_con2f")
+
+[node name="Menu Labels2" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = -96.0
+offset_top = -131.0
+offset_right = -33.0
+offset_bottom = -40.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Play
+Options
+Scores
+Credits"
+scroll_active = false
+
+[node name="Menu Labels" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = -101.0
+offset_top = -136.0
+offset_right = -38.0
+offset_bottom = -45.0
+scale = Vector2(4, 4)
+text = "Play
+Options
+Scores
+Credits"
+scroll_active = false
+
+[node name="Pointer" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-131, -87)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_con2f")
+autoplay = "default"
+frame_progress = 0.43045
+script = ExtResource("3_con2f")
