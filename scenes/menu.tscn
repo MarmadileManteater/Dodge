@@ -784,13 +784,13 @@ Author: [url=https://opengameart.org/users/bart]bart[/url]
 License: [url=http://creativecommons.org/licenses/by/3.0/]CC-BY 3.0[/url]"
 scroll_active = false
 
-[connection signal="gui_input" from="PlayLabel" to="Pointer" method="_on_gui_input"]
+[connection signal="gui_input" from="PlayLabel" to="Pointer" method="_on_gui_input" binds= [0]]
 [connection signal="mouse_entered" from="PlayLabel" to="Pointer" method="_on_play_label_mouse_entered"]
-[connection signal="gui_input" from="OptionsLabel" to="Pointer" method="_on_gui_input"]
+[connection signal="gui_input" from="OptionsLabel" to="Pointer" method="_on_gui_input" binds= [1]]
 [connection signal="mouse_entered" from="OptionsLabel" to="Pointer" method="_on_options_label_mouse_entered"]
-[connection signal="gui_input" from="ScoresLabel" to="Pointer" method="_on_gui_input"]
+[connection signal="gui_input" from="ScoresLabel" to="Pointer" method="_on_gui_input" binds= [2]]
 [connection signal="mouse_entered" from="ScoresLabel" to="Pointer" method="_on_scores_label_mouse_entered"]
-[connection signal="gui_input" from="CreditsLabel" to="Pointer" method="_on_gui_input"]
+[connection signal="gui_input" from="CreditsLabel" to="Pointer" method="_on_gui_input" binds= [3]]
 [connection signal="mouse_entered" from="CreditsLabel" to="Pointer" method="_on_credits_label_mouse_entered"]
 [connection signal="mouse_entered" from="Audio Settings/Effect Hover" to="Pointer" method="_on_effect_hover_mouse_entered"]
 [connection signal="gui_input" from="Audio Settings/Effect Slider/Click Listener" to="." method="_on_click_listener_effect_slider"]

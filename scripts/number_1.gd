@@ -37,7 +37,10 @@ var bgm_muted = false
 #endregion
 #region Signals
 func _on_projectile_timer_timeout() -> void:
-	var projectile: RigidBody2D = projectiles[randi() % len(projectiles)]
+	var index = 0
+	if progression > 5:
+		index = randi() % len(projectiles)
+	var projectile: RigidBody2D = projectiles[index]
 	spawn_projectile(projectile)
 	
 func _on_progression_timer_timeout() -> void:
@@ -47,6 +50,9 @@ func _on_progression_timer_timeout() -> void:
 		score_backdrop.text = "%d" % progression
 		projectile_timer.wait_time = 1.0 / (progression + 1
 		)
+		if progression > 5:
+			projectile_timer.wait_time = 1.0 / (floor(progression / 2) + 1)	
+		
 
 func _on_demo_timer_timeout() -> void:
 	demo_label.visible = !demo_label.visible
@@ -76,11 +82,12 @@ func generate_coord_around_viewport():
 	return outline.get_point_position(randi() % outline.get_point_count())
 
 func spawn_projectile(projectile: RigidBody2D):
+	var projectile_speed = 400 if projectile.name.contains("Lighting") else 250
 	var new_projectile = projectile.duplicate()
 	var position = generate_coord_around_viewport()
 	new_projectile.position = position
 	new_projectile.rotation = position.direction_to(player.position).angle() - 1
-	new_projectile.linear_velocity = position.direction_to(player.position) * 250
+	new_projectile.linear_velocity = position.direction_to(player.position) * projectile_speed
 	new_projectile.name = "%d-%s" % [ 
 		counter,
 		projectile.name

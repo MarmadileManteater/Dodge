@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=4 uid="uid://btxnb4hdoanqc"]
+[gd_scene load_steps=74 format=4 uid="uid://btxnb4hdoanqc"]
 
 [ext_resource type="Script" uid="uid://btmurkrw0wt34" path="res://scripts/number_1.gd" id="1_2ane3"]
 [ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="1_hqiah"]
@@ -450,6 +450,24 @@ animations = [{
 radius = 19.0
 height = 56.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5i0b"]
+atlas = ExtResource("3_3llju")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_no5yo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5i0b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0igfi"]
+size = Vector2(49.8623, 12.019)
+
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_8xorg"]
 a = Vector2(-13.587, -893)
 b = Vector2(-14.6739, 916)
@@ -536,6 +554,36 @@ sprite_frames = SubResource("SpriteFrames_877u3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Fireball-Projectile"]
 position = Vector2(1, 2)
 shape = SubResource("CapsuleShape2D_ck8lo")
+
+[node name="Lighting-Projectile" type="RigidBody2D" parent="."]
+position = Vector2(659, -78)
+collision_layer = 2
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("5_sj2e1")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Lighting-Projectile"]
+texture_filter = 1
+rotation = -0.598916
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_no5yo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lighting-Projectile"]
+position = Vector2(3, 11)
+rotation = -1.45814
+shape = SubResource("RectangleShape2D_0igfi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Lighting-Projectile"]
+position = Vector2(-4, -10)
+rotation = -1.3732
+shape = SubResource("RectangleShape2D_0igfi")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Lighting-Projectile"]
+position = Vector2(-1, 0)
+rotation = -1.3732
+scale = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_0igfi")
 
 [node name="ProjectileTimer" type="Timer" parent="."]
 autostart = true
@@ -693,6 +741,7 @@ autostart = true
 [connection signal="timeout" from="Player/DemoTimer" to="Player" method="_on_demo_timer_timeout"]
 [connection signal="timeout" from="Player/DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="body_entered" from="Fireball-Projectile" to="Fireball-Projectile" method="_on_body_entered"]
+[connection signal="body_entered" from="Lighting-Projectile" to="Lighting-Projectile" method="_on_body_entered"]
 [connection signal="timeout" from="ProjectileTimer" to="." method="_on_projectile_timer_timeout"]
 [connection signal="timeout" from="ProgressionTimer" to="." method="_on_progression_timer_timeout"]
 [connection signal="timeout" from="DemoLabel Container/DemoTimer" to="." method="_on_demo_timer_timeout"]
