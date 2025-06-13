@@ -465,6 +465,7 @@ text = "1.
 scroll_active = false
 
 [node name="Credits" type="Node2D" parent="."]
+visible = false
 texture_filter = 1
 position = Vector2(588, -46)
 script = ExtResource("6_v86rl")
