@@ -21,7 +21,7 @@ func _enter_tree() -> void:
 
 func _physics_process(delta: float) -> void:
 	if (is_scrolling):
-		if (scrolling_content.position[1] > -3820):
+		if (scrolling_content.position[1] > -4320):
 			scrolling_content.position[1] -= 2
 		else:
 			scrolling_content.position[1] = 600

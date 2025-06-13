@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://btxnb4hdoanqc"]
+[gd_scene load_steps=82 format=4 uid="uid://btxnb4hdoanqc"]
 
 [ext_resource type="Script" uid="uid://btmurkrw0wt34" path="res://scripts/number_1.gd" id="1_2ane3"]
 [ext_resource type="Texture2D" uid="uid://c0in1pup8bvi4" path="res://assets/spritesheets/zelda-like-character.png" id="1_hqiah"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://mnqel2hj68lq" path="res://assets/spritesheets/16x16-rpg-icons.png" id="3_3llju"]
 [ext_resource type="Script" uid="uid://bqnbgso0b61h6" path="res://scripts/projectile.gd" id="5_sj2e1"]
 [ext_resource type="AudioStream" uid="uid://bo50lqguyq5b3" path="res://assets/sounds/explosion.ogg" id="6_hnlpu"]
+[ext_resource type="AudioStream" uid="uid://b7awcgus22yiu" path="res://assets/sounds/Rise03.ogg" id="7_ly5pc"]
 [ext_resource type="AudioStream" uid="uid://vpqmiowahasq" path="res://assets/music/The Adventure Begins 8-bit remix.ogg" id="8_ubbun"]
 [ext_resource type="Script" uid="uid://bn62qmgchw447" path="res://scripts/flicker_box.gd" id="9_58b4l"]
 [ext_resource type="PackedScene" uid="uid://p1fa37oi3mua" path="res://scenes/menu.tscn" id="10_gj6lo"]
@@ -468,6 +469,69 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0igfi"]
 size = Vector2(49.8623, 12.019)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sojl2"]
+height = 53.0568
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_no5yo"]
+atlas = ExtResource("3_3llju")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0igfi"]
+atlas = ExtResource("3_3llju")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rus2s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_no5yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0igfi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="Animation" id="Animation_dv4we"]
+resource_name = "floating"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 14), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8uuei"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8bcvc"]
+_data = {
+&"RESET": SubResource("Animation_8uuei"),
+&"floating": SubResource("Animation_dv4we")
+}
+
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_8xorg"]
 a = Vector2(-13.587, -893)
 b = Vector2(-14.6739, 916)
@@ -514,6 +578,18 @@ one_shot = true
 [node name="Explosion" type="AudioStreamPlayer2D" parent="Player"]
 stream = ExtResource("6_hnlpu")
 volume_db = -20.0
+
+[node name="PowerUpTimer" type="Timer" parent="Player"]
+wait_time = 10.0
+one_shot = true
+
+[node name="PowerUpEffectTimer" type="Timer" parent="Player"]
+wait_time = 0.25
+autostart = true
+
+[node name="Power Up" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("7_ly5pc")
+volume_db = -15.0
 
 [node name="Bounding Box" type="StaticBody2D" parent="."]
 collision_layer = 4
@@ -594,6 +670,35 @@ points = PackedVector2Array(-92, 736, -92.7679, 613.602, -93.6255, 476.891, -94.
 [node name="ProgressionTimer" type="Timer" parent="."]
 wait_time = 4.0
 autostart = true
+
+[node name="Speed-Up Wrapper" type="Node2D" parent="."]
+position = Vector2(1340, 215)
+
+[node name="Speed-Up" type="RigidBody2D" parent="Speed-Up Wrapper"]
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Speed-Up Wrapper/Speed-Up"]
+position = Vector2(1, -0.386597)
+rotation = -1.02787
+scale = Vector2(1.5348, 1.13524)
+shape = SubResource("CapsuleShape2D_sojl2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Speed-Up Wrapper/Speed-Up"]
+texture_filter = 1
+position = Vector2(0, -2.26932)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_rus2s")
+autoplay = "default"
+frame_progress = 0.552721
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Speed-Up Wrapper/Speed-Up"]
+libraries = {
+&"": SubResource("AnimationLibrary_8bcvc")
+}
+autoplay = "floating"
 
 [node name="Projectiles" type="Node2D" parent="."]
 
@@ -738,8 +843,15 @@ scroll_active = false
 wait_time = 0.5
 autostart = true
 
+[node name="Power-Up Line" type="Line2D" parent="."]
+position = Vector2(146, -90)
+points = PackedVector2Array(853, 218, 845, 330, 840, 435, 789, 543, 713, 396, 674, 266, 681, 216, 615, 248, 592, 398, 612, 540, 536, 556, 468, 664, 298, 622, 309, 454, 330, 348, 425, 285, 323, 200, 207, 174, 177, 274, 178, 427, 190, 527, 164, 633, 112, 670, -5, 585, 8, 422, 43, 337, -20, 329, -55, 163, -57, 659)
+default_color = Color(1, 1, 1, 0)
+
 [connection signal="timeout" from="Player/DemoTimer" to="Player" method="_on_demo_timer_timeout"]
 [connection signal="timeout" from="Player/DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="Player/PowerUpTimer" to="Player" method="_on_power_up_timer_timeout"]
+[connection signal="timeout" from="Player/PowerUpEffectTimer" to="Player" method="_on_power_up_effect_timer_timeout"]
 [connection signal="body_entered" from="Fireball-Projectile" to="Fireball-Projectile" method="_on_body_entered"]
 [connection signal="body_entered" from="Lighting-Projectile" to="Lighting-Projectile" method="_on_body_entered"]
 [connection signal="timeout" from="ProjectileTimer" to="." method="_on_projectile_timer_timeout"]

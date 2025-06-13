@@ -12,11 +12,16 @@ var directions_pressed = []
 #endregion
 #region Child Nodes
 @export var explosion_sound_effect: AudioStreamPlayer2D
+@export var power_up_sound_effect: AudioStreamPlayer2D
 var animated_sprite: AnimatedSprite2D
 var death_timer: Timer
+var power_up_timer: Timer
 #endregion
 #region Methods
 func reset():
+	animated_sprite.modulate = Color8(255, 255, 255, 255)
+	speed = 200
+	power_up_timer.stop()
 	if (alive):
 		# reset animation when alive
 		animated_sprite.animation = "idle_down"
@@ -48,6 +53,8 @@ func _enter_tree() -> void:
 	animated_sprite = find_child("AnimatedSprite2D")
 	death_timer = find_child("DeathTimer")
 	explosion_sound_effect = find_child("Explosion")
+	power_up_timer = find_child("PowerUpTimer")
+	power_up_sound_effect = find_child("Power Up")
 
 func _input(event: InputEvent) -> void:
 	if alive and mode == "game":
@@ -73,6 +80,12 @@ func _physics_process(delta: float) -> void:
 		animated_sprite.animation = "idle_down"
 		animated_sprite.play()
 	var bodies = get_colliding_bodies()
+	if (bodies.any(func(body: Node2D): return body.name.contains("Speed-Up"))):
+		if (!mute_explosion):
+			power_up_sound_effect.play()
+		speed = 400
+		power_up_timer.start()
+		bodies.filter(func(body):  return body.name.contains("Speed-Up"))[0].queue_free()
 	var projectiles = bodies.filter(func(body: Node2D): return body.name.ends_with("Projectile") && body.is_inside_tree())
 	if (len(projectiles) != 0) && alive:
 		for projectile in projectiles:
@@ -94,3 +107,13 @@ func _physics_process(delta: float) -> void:
 		animated_sprite.animation = "walk_%s" % Direction.to_english(directions_pressed[0])
 		for direction in directions_pressed:
 			linear_velocity += Direction.to_vec2(direction, speed)
+
+func _on_power_up_timer_timeout() -> void:
+	speed = 200
+
+
+func _on_power_up_effect_timer_timeout() -> void:
+	if (speed > 200):
+		animated_sprite.modulate = Color8(randi() % 255,randi() % 255,randi() % 255,255)
+	else:
+		animated_sprite.modulate = Color8(255, 255, 255, 255)

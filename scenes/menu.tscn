@@ -465,7 +465,6 @@ text = "1.
 scroll_active = false
 
 [node name="Credits" type="Node2D" parent="."]
-visible = false
 texture_filter = 1
 position = Vector2(588, -46)
 script = ExtResource("6_v86rl")
@@ -651,7 +650,7 @@ scale = Vector2(4, 4)
 bbcode_enabled = true
 text = "[url=https://opengameart.org/content/grass-tiles-basic]Grass Tiles Basic[/url]
 Author: [url=https://opengameart.org/users/colourful-lungs]ColourfulLungs[/url]
-License: [url=http://creativecommons.org/licenses/by-sa/4.0/]CC0[/url]"
+License: [url=http://creativecommons.org/publicdomain/zero/1.0//]CC0[/url]"
 scroll_active = false
 
 [node name="Grass Tiles Basic Spritesheet" type="Sprite2D" parent="Credits/Scrolling Content"]
@@ -696,7 +695,7 @@ offset_right = -183.0
 offset_bottom = 1556.0
 scale = Vector2(4, 4)
 bbcode_enabled = true
-text = "[url= https://opengameart.org/content/explosion-effect-pixel-art]Explosion Effect (pixel art)[/url]
+text = "[url=https://opengameart.org/content/explosion-effect-pixel-art]Explosion Effect (pixel art)[/url]
 Author: [url=https://opengameart.org/users/lixing]LIXING[/url]
 License: 
 [url=http://creativecommons.org/licenses/by-sa/4.0/]CC-BY-SA 4.0[/url]"
@@ -784,6 +783,38 @@ Author: [url=https://opengameart.org/users/bart]bart[/url]
 License: [url=http://creativecommons.org/licenses/by/3.0/]CC-BY 3.0[/url]"
 scroll_active = false
 
+[node name="Seperator7" type="Line2D" parent="Credits/Scrolling Content"]
+position = Vector2(7, 3155)
+points = PackedVector2Array(-321, 247, 233, 247)
+width = 2.0
+
+[node name="Level up2" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -334.0
+offset_top = 3427.0
+offset_right = -179.0
+offset_bottom = 3566.0
+scale = Vector2(4, 4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/level-up-power-up-coin-get-13-sounds]Level up, power up, Coin get (13 Sounds)[/url]
+Author: [url=https://opengameart.org/users/wobbleboxx]wobbleboxx[/url]
+License: [url=http://creativecommons.org/publicdomain/zero/1.0/]CC0[/url]"
+scroll_active = false
+
+[node name="Level up" type="RichTextLabel" parent="Credits/Scrolling Content"]
+texture_filter = 1
+offset_left = -338.0
+offset_top = 3421.0
+offset_right = -183.0
+offset_bottom = 3560.0
+scale = Vector2(4, 4)
+bbcode_enabled = true
+text = "[url=https://opengameart.org/content/level-up-power-up-coin-get-13-sounds]Level up, power up, Coin get (13 Sounds)[/url]
+Author: [url=https://opengameart.org/users/wobbleboxx]wobbleboxx[/url]
+License: [url=http://creativecommons.org/publicdomain/zero/1.0/]CC0[/url]"
+scroll_active = false
+
 [connection signal="gui_input" from="PlayLabel" to="Pointer" method="_on_gui_input" binds= [0]]
 [connection signal="mouse_entered" from="PlayLabel" to="Pointer" method="_on_play_label_mouse_entered"]
 [connection signal="gui_input" from="OptionsLabel" to="Pointer" method="_on_gui_input" binds= [1]]
@@ -814,3 +845,5 @@ scroll_active = false
 [connection signal="meta_clicked" from="Credits/Scrolling Content/Music and Effects Title" to="." method="_meta_clicked"]
 [connection signal="meta_clicked" from="Credits/Scrolling Content/Explosions Sound Effect" to="." method="_meta_clicked"]
 [connection signal="meta_clicked" from="Credits/Scrolling Content/The Adventure Begins 8-bit Remix" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Level up2" to="." method="_meta_clicked"]
+[connection signal="meta_clicked" from="Credits/Scrolling Content/Level up" to="." method="_meta_clicked"]
