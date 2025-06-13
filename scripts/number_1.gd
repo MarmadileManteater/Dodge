@@ -142,7 +142,8 @@ func set_volume_relatively(volume, position = menu.pointer.cursor_position):
 			bgm_volume = volume_range
 		bgm_muted = floor(bgm_volume) <= -volume_range
 		# won't set before music loads
-		background_music.stream_paused = bgm_muted
+		if (bgm_muted != background_music.stream_paused):
+			background_music.stream_paused = bgm_muted
 		if (!background_music.playing && !bgm_muted):
 			background_music.play()
 		background_music.volume_db += volume
